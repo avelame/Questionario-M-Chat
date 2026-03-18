@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M-CHAT-R™ Profissional | Triagem TEA (16-30 meses)</title>
+    <!-- Chart.js e Font Awesome -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Fonte Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #eef2f7, #d9e2ef);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 2.5rem;
+            box-shadow: 0 30px 50px rgba(0,10,30,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #0b2545, #1b3b5c);
+            color: white;
+            padding: 1.8rem 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            border-bottom: 4px solid #ffb74d;
+        }
+        .header h1 { font-size: 2.2rem; display: flex; align-items: center; gap: 0.8rem; }
+        .header h1 i { color: #ffb74d; }
+        .copyright {
+            background: rgba(255,255,255,0.1);
+            padding: 0.4rem 1.2rem;
+            border-radius: 3rem;
+            font-size: 0.8rem;
+        }
+        .content { padding: 2rem 2.5rem; }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0b2545;
+            margin-bottom: 1.2rem;
+            border-left: 7px solid #ff9f1c;
+            padding-left: 1rem;
+        }
+
+        .patient-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+            gap: 1rem;
+            background: #f7faff;
+            padding: 1.5rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .field label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #2a405c;
+        }
+        .field input, .field select {
+            padding: 0.8rem 1rem;
+            border: 2px solid #dbe1ed;
+            border-radius: 1.2rem;
+            font-size: 0.95rem;
+            background: white;
+        }
+        .field input:focus, .field select:focus {
+            border-color: #2f6690;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(47,102,144,0.15);
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 1.5rem;
+        }
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 2.5rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            border: 1px solid #c0cee2;
+        }
+        .btn-primary { background: #1d3a5c; color: white; border: none; }
+        .btn-primary:hover { background: #0b2a48; transform: translateY(-2px); }
+        .btn-success { background: #1a7431; color: white; border: none; }
+        .btn-outline { border: 1px solid #1d3a5c; color: #1d3a5c; background: transparent; }
+        .btn-outline:hover { background: #e9f0fc; }
+
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .risk-card {
+            background: white;
+            border-radius: 2rem;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            border-left: 8px solid;
+        }
+        .risk-low { background: #e3f5e7; border-left-color: #2ecc71; }
+        .risk-med { background: #fff1d4; border-left-color: #f39c12; }
+        .risk-high { background: #ffe4e2; border-left-color: #e74c3c; }
+        .risk-card span { font-size: 2rem; font-weight: 800; display: block; }
+
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .q-item {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e0eaf5;
+        }
+        .q-num {
+            background: #d4e0f0;
+            color: #0b2545;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .q-text { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .q-opts { display: flex; gap: 1.2rem; }
+        .q-opts label { display: flex; align-items: center; gap: 0.3rem; cursor: pointer; }
+
+        .progress-bar {
+            height: 0.6rem;
+            background: #e3eaf3;
+            border-radius: 2rem;
+            margin: 1rem 0;
+        }
+        .progress-fill { height: 100%; background: #2c8555; width: 0%; border-radius: 2rem; }
+
+        .charts-row {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .chart-card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1rem;
+            border: 1px solid #dce5f0;
+        }
+
+        .result-box {
+            border-radius: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            margin: 1.5rem 0;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: #3c5777;
+            text-align: center;
+            border-top: 1px dashed #b3c7e0;
+            padding-top: 1rem;
+        }
+
+        @media (max-width: 700px) {
+            .questions-grid { grid-template-columns: 1fr; }
+            .charts-row { grid-template-columns: 1fr; }
+            .risk-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-hand-holding-heart"></i> M‑CHAT‑R™</h1>
+        <div class="copyright">© 2009 Robins, Fein & Barton · trad. Dra. Rosa Resegue</div>
+    </div>
+    <div class="content">
+        <!-- CADASTRO -->
+        <div>
+            <div class="section-title"><i class="fas fa-id-card"></i> Dados da criança</div>
+            <div class="patient-grid">
+                <div class="field"><label>Nome completo</label><input type="text" id="patientName" placeholder="Ex.: Sofia M. Oliveira"></div>
+                <div class="field"><label>Data nascimento</label><input type="date" id="birthDate"></div>
+                <div class="field"><label>Responsável</label><input type="text" id="parentName" placeholder="Nome do responsável"></div>
+                <div class="field"><label>Telefone</label><input type="tel" id="phone" placeholder="(11) 99999-9999"></div>
+                <div class="field">
+                    <label>Avaliador</label>
+                    <select id="evaluator">
+                        <option value="">Selecione</option>
+                        <option value="pediatra">Pediatra</option>
+                        <option value="psicologo">Psicólogo(a)</option>
+                        <option value="fono">Fonoaudiólogo(a)</option>
+                        <option value="terapeuta_ocupacional">Terapeuta Ocupacional</option>
+                        <option value="outros">Outro profissional</option>
+                    </select>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-primary" id="savePatientBtn"><i class="fas fa-save"></i> Salvar cadastro</button>
+                <button class="btn btn-outline" id="loadDataBtn"><i class="fas fa-upload"></i> Carregar avaliação (JSON)</button>
+                <input type="file" id="fileInput" accept=".json" style="display: none;">
+                <button class="btn btn-outline" id="clearBtn"><i class="fas fa-undo-alt"></i> Limpar</button>
+            </div>
+        </div>
+
+        <!-- TABELA DE RISCO -->
+        <div class="risk-grid">
+            <div class="risk-card risk-low"><span>0–2</span> Baixo Risco <br><small>repetir aos 24 meses</small></div>
+            <div class="risk-card risk-med"><span>3–7</span> Risco Moderado <br><small>aplicar entrevista</small></div>
+            <div class="risk-card risk-high"><span>8–20</span> Alto Risco <br><small>encaminhamento</small></div>
+        </div>
+
+        <!-- PROGRESSO -->
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+
+        <!-- PERGUNTAS -->
+        <form id="mchatForm">
+            <div class="questions-grid" id="questionsGrid"></div>
+            <div class="btn-group" style="justify-content: center; margin-top: 2rem;">
+                <button type="button" class="btn btn-primary" id="calcBtn" style="padding:1rem 2.5rem;"><i class="fas fa-calculator"></i> Calcular pontuação</button>
+                <button type="button" class="btn btn-success" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF (1 página)</button>
+            </div>
+        </form>
+
+        <!-- RESULTADO E GRÁFICOS -->
+        <div id="resultArea"></div>
+        <div class="charts-row" id="chartsContainer" style="display: none;">
+            <div class="chart-card"><div style="font-weight:600; margin-bottom:0.5rem;"><i class="fas fa-chart-pie"></i> Proporção</div><canvas id="pieChart" style="max-height:150px;"></canvas></div>
+            <div class="chart-card"><div style="font-weight:600; margin-bottom:0.5rem;"><i class="fas fa-chart-bar"></i> Itens com risco</div><canvas id="barChart" style="max-height:150px;"></canvas></div>
+        </div>
+
+        <!-- RODAPÉ COPYRIGHT -->
+        <div class="footer-note">
+            <i class="far fa-copyright"></i> 2009 Diana Robins, Deborah Fein, & Marianne Barton. Tradução: Dra. Rosa Miranda Resegue.  
+            Uso obrigatório do instrumento completo. www.mchatscreen.com
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ---------- PERGUNTAS OFICIAIS (com exemplos) ----------
+    const QUESTIONS = [
+        "Se você apontar para qualquer coisa do outro lado do cômodo, sua criança olha para o que você está apontando? (Ex.: brinquedo ou animal)",
+        "Alguma vez você já se perguntou se sua criança poderia ser surda?",
+        "Sua criança brinca de faz-de-conta? (Ex.: finge beber em copo vazio, falar ao telefone, dar comida a boneca)",
+        "Sua criança gosta de subir nas coisas? (Ex.: móveis, escadas, brinquedos de parque)",
+        "Sua criança faz movimentos incomuns com os dedos perto dos olhos? (Ex.: abana os dedos perto dos olhos)",
+        "Sua criança aponta com o dedo para pedir algo ou conseguir ajuda? (Ex.: aponta para alimento fora do alcance)",
+        "Sua criança aponta com o dedo para lhe mostrar algo interessante? (Ex.: avião no céu, caminhão na estrada)",
+        "Sua criança interessa-se por outras crianças? (Ex.: observa, sorri ou aproxima-se)",
+        "Sua criança mostra-lhe coisas, trazendo ou segurando, apenas para compartilhar? (Ex.: flor, brinquedo)",
+        "Sua criança responde quando você a chama pelo nome? (Ex.: olha, balbucia, para o que faz)",
+        "Quando você sorri para sua criança, ela sorri de volta para você?",
+        "Sua criança fica incomodada com ruídos do dia a dia? (Ex.: aspirador, música alta, gritos)",
+        "Sua criança já anda?",
+        "Sua criança olha você nos olhos quando você fala, brinca ou veste ela?",
+        "Sua criança tenta imitar o que você faz? (Ex.: dar tchau, bater palmas, sons engraçados)",
+        "Se você virar a cabeça para olhar algo, sua criança olha em volta para ver o que você está olhando?",
+        "Sua criança busca que você preste atenção nela? (Ex.: olha para receber elogio, diz 'olha')",
+        "Sua criança compreende quando você lhe diz para fazer algo? (Ex.: 'ponha o livro na cadeira', sem apontar)",
+        "Quando algo novo acontece, sua criança olha para seu rosto para ver sua reação? (Ex.: barulho estranho)",
+        "Sua criança gosta de atividades com movimento? (Ex.: ser balançada, pular no colo)"
+    ];
+    const SPECIAL = [1,4,11]; // itens 2,5,12 (0-index)
+
+    // Estado
+    let patientData = {};
+    let chartInstances = {};
+
+    // ---------- Utils ----------
+    function loadStoredPatient() {
+        try {
+            const p = localStorage.getItem('mchatCurrentPatient');
+            if (p) {
+                patientData = JSON.parse(p);
+                document.getElementById('patientName').value = patientData.name || '';
+                document.getElementById('birthDate').value = patientData.birthDate || '';
+                document.getElementById('parentName').value = patientData.parentName || '';
+                document.getElementById('phone').value = patientData.phone || '';
+                document.getElementById('evaluator').value = patientData.evaluator || '';
+            }
+        } catch (e) {}
+    }
+
+    function saveCurrentPatient() {
+        patientData = {
+            name: document.getElementById('patientName').value,
+            birthDate: document.getElementById('birthDate').value,
+            parentName: document.getElementById('parentName').value,
+            phone: document.getElementById('phone').value,
+            evaluator: document.getElementById('evaluator').value
+        };
+        localStorage.setItem('mchatCurrentPatient', JSON.stringify(patientData));
+        alert('✅ Dados salvos');
+    }
+
+    function clearAll() {
+        if (confirm('Limpar todos os dados e respostas?')) {
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            document.getElementById('patientName').value = '';
+            document.getElementById('birthDate').value = '';
+            document.getElementById('parentName').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('evaluator').value = '';
+            patientData = {};
+            localStorage.removeItem('mchatCurrentPatient');
+            updateProgress();
+            document.getElementById('resultArea').innerHTML = '';
+            document.getElementById('chartsContainer').style.display = 'none';
+        }
+    }
+
+    // ---------- Renderizar perguntas ----------
+    function renderQuestions() {
+        const grid = document.getElementById('questionsGrid');
+        grid.innerHTML = '';
+        QUESTIONS.forEach((txt, i) => {
+            const div = document.createElement('div');
+            div.className = 'q-item';
+            div.innerHTML = `
+                <div class="q-num">${i+1}</div>
+                <div class="q-text">${txt}</div>
+                <div class="q-opts">
+                    <label><input type="radio" name="q${i}" value="sim"> Sim</label>
+                    <label><input type="radio" name="q${i}" value="nao"> Não</label>
+                </div>
+            `;
+            grid.appendChild(div);
+        });
+        document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener('change', updateProgress));
+    }
+
+    function updateProgress() {
+        let answered = 0;
+        for (let i=0; i<20; i++) if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
+        document.getElementById('progressFill').style.width = (answered/20)*100 + '%';
+    }
+
+    // ---------- Calcular pontuação ----------
+    function computeScore() {
+        let score = 0;
+        const responses = [];
+        for (let i=0; i<20; i++) {
+            const sel = document.querySelector(`input[name="q${i}"]:checked`);
+            if (!sel) return null;
+            const ans = sel.value;
+            responses.push(ans);
+            const isSpecial = SPECIAL.includes(i);
+            const riskAns = isSpecial ? 'sim' : 'nao';
+            if (ans === riskAns) score++;
+        }
+        return { score, responses };
+    }
+
+    function getRiskLabel(score) {
+        if (score <= 2) return 'Baixo Risco';
+        if (score <= 7) return 'Risco Moderado';
+        return 'Alto Risco';
+    }
+
+    function displayResult(score, responses) {
+        const risk = getRiskLabel(score);
+        let bgClass = 'risk-low';
+        if (score >=3 && score<=7) bgClass = 'risk-med';
+        else if (score>=8) bgClass = 'risk-high';
+        let msg = '';
+        if (score<=2) msg = 'Repetir o M‑CHAT‑R aos 24 meses.';
+        else if (score<=7) msg = 'Aplicar a Entrevista de Seguimento (M‑CHAT‑R/F).';
+        else msg = 'Encaminhar para avaliação diagnóstica e intervenção imediata.';
+        const age = patientData.birthDate ? calculateAge(patientData.birthDate) + ' meses' : '';
+        document.getElementById('resultArea').innerHTML = `
+            <div class="result-box ${bgClass}">
+                <h2 style="font-size:2rem;">${score}/20 · ${risk}</h2>
+                <p style="font-size:1.1rem;">${msg}</p>
+                <p>${patientData.name || ''} ${age}</p>
+            </div>
+        `;
+        document.getElementById('chartsContainer').style.display = 'grid';
+        generateCharts(score, responses);
+    }
+
+    function calculateAge(birth) {
+        if (!birth) return '';
+        const hoje = new Date(), nasc = new Date(birth);
+        return (hoje.getFullYear()-nasc.getFullYear())*12 + (hoje.getMonth()-nasc.getMonth());
+    }
+
+    function generateCharts(score, responses) {
+        Object.values(chartInstances).forEach(c => c?.destroy());
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        chartInstances.pie = new Chart(pieCtx, {
+            type: 'pie',
+            data: {
+                labels: ['Risco', 'Sem risco'],
+                datasets: [{ data: [score, 20-score], backgroundColor: ['#c44545', '#3c8d5e'] }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+        });
+        const riskData = responses.map((ans,i) => SPECIAL.includes(i) ? (ans==='sim'?1:0) : (ans==='nao'?1:0));
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        chartInstances.bar = new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: Array.from({length:20},(_,i)=>i+1),
+                datasets: [{ data: riskData, backgroundColor: riskData.map(v => v ? '#c44545' : '#3c8d5e') }]
+            },
+            options: { scales: { y: { beginAtZero: true, max:1 } }, plugins: { legend: { display: false } } }
+        });
+    }
+
+    // ---------- Carregar avaliação via JSON ----------
+    function loadFromJSON(file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                const data = JSON.parse(e.target.result);
+                if (data.patient) {
+                    document.getElementById('patientName').value = data.patient.name || '';
+                    document.getElementById('birthDate').value = data.patient.birthDate || '';
+                    document.getElementById('parentName').value = data.patient.parentName || '';
+                    document.getElementById('phone').value = data.patient.phone || '';
+                    document.getElementById('evaluator').value = data.patient.evaluator || '';
+                    patientData = { ...data.patient };
+                }
+                if (data.responses && Array.isArray(data.responses) && data.responses.length === 20) {
+                    for (let i=0; i<20; i++) {
+                        const radios = document.getElementsByName(`q${i}`);
+                        for (let r of radios) if (r.value === data.responses[i]) r.checked = true;
+                    }
+                }
+                updateProgress();
+                if (data.responses) {
+                    const sc = computeScore();
+                    if (sc) displayResult(sc.score, sc.responses);
+                }
+                alert('✅ Avaliação carregada');
+            } catch (err) {
+                alert('Arquivo inválido');
+            }
+        };
+        reader.readAsText(file);
+    }
+
+    // ---------- PDF refinado em uma página ----------
+    async function generatePDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'pt', 'a4');
+        const scoreData = computeScore();
+        if (!scoreData) { alert('Complete todas as perguntas.'); return; }
+        const { score, responses } = scoreData;
+        const riskLabel = getRiskLabel(score);
+
+        // Cabeçalho elegante
+        doc.setFillColor(11, 37, 69);
+        doc.rect(0, 0, 600, 80, 'F');
+        doc.setTextColor(255,255,255);
+        doc.setFontSize(22);
+        doc.setFont('helvetica', 'bold');
+        doc.text('M-CHAT-R™', 40, 45);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        doc.text('Triagem para Transtorno do Espectro Autista (16-30 meses)', 40, 62);
+        doc.text('© 2009 Robins, Fein & Barton · Tradução Dra. Rosa Resegue', 40, 75);
+        doc.setTextColor(0,0,0);
+
+        // Dados do paciente em caixa destacada
+        doc.setFillColor(245, 248, 250);
+        doc.roundedRect(40, 95, 520, 70, 8, 8, 'F');
+        doc.setDrawColor(200, 210, 220);
+        doc.setLineWidth(0.5);
+        doc.roundedRect(40, 95, 520, 70, 8, 8, 'S');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 30, 30);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Dados da criança', 50, 115);
+        doc.setFont('helvetica', 'normal');
+        doc.text(`Nome: ${patientData.name || '________________________'}`, 50, 132);
+        doc.text(`Nascimento: ${patientData.birthDate || '______'}  |  Idade: ${calculateAge(patientData.birthDate) || '--'} meses`, 50, 147);
+        doc.text(`Responsável: ${patientData.parentName || '________'}  |  Avaliador: ${document.getElementById('evaluator').selectedOptions[0]?.text || '________'}`, 50, 162);
+
+        let y = 185;
+
+        // Pontuação e interpretação em destaque
+        doc.setFillColor(240, 247, 255);
+        doc.roundedRect(40, y, 520, 50, 8, 8, 'F');
+        doc.setDrawColor(70, 130, 200);
+        doc.roundedRect(40, y, 520, 50, 8, 8, 'S');
+        doc.setFontSize(16);
+        doc.setTextColor(11, 37, 69);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`Pontuação: ${score}/20 · ${riskLabel}`, 50, y+22);
+        doc.setFontSize(9);
+        doc.setTextColor(60, 60, 60);
+        let interpret = '';
+        if (score<=2) interpret = 'Baixo risco: repetir M-CHAT-R aos 24 meses. Nenhuma outra medida.';
+        else if (score<=7) interpret = 'Risco moderado: aplicar Entrevista de Seguimento (M-CHAT-R/F).';
+        else interpret = 'Alto risco: encaminhar para avaliação diagnóstica imediata.';
+        doc.text(interpret, 50, y+40);
+        y += 65;
+
+        // Tabela de respostas em grid elegante
+        doc.setFontSize(9);
+        doc.setTextColor(0,0,0);
+        doc.setFont('helvetica', 'bold');
+        doc.text('Respostas individuais (ítem: resposta · risco)', 40, y); y+=15;
+        doc.setFont('helvetica', 'normal');
+        const colX = [40, 200, 360];
+        // Cabeçalho da tabela
+        doc.setFillColor(230, 240, 250);
+        doc.rect(colX[0]-5, y-12, 150, 16, 'F');
+        doc.rect(colX[1]-5, y-12, 140, 16, 'F');
+        doc.rect(colX[2]-5, y-12, 140, 16, 'F');
+        doc.text('Itens 1-7', colX[0], y-2);
+        doc.text('Itens 8-14', colX[1], y-2);
+        doc.text('Itens 15-20', colX[2], y-2);
+        y += 10;
+
+        for (let row=0; row<7; row++) {
+            let i1 = row;
+            let i2 = row+7;
+            let i3 = row+14;
+            if (i3 >= 20) continue;
+            let ans1 = responses[i1]==='sim' ? 'SIM' : 'NÃO';
+            let risk1 = SPECIAL.includes(i1) ? (responses[i1]==='sim'?'⚠️':'') : (responses[i1]==='nao'?'⚠️':'');
+            let ans2 = responses[i2]==='sim' ? 'SIM' : 'NÃO';
+            let risk2 = SPECIAL.includes(i2) ? (responses[i2]==='sim'?'⚠️':'') : (responses[i2]==='nao'?'⚠️':'');
+            let ans3 = responses[i3]==='sim' ? 'SIM' : 'NÃO';
+            let risk3 = SPECIAL.includes(i3) ? (responses[i3]==='sim'?'⚠️':'') : (responses[i3]==='nao'?'⚠️':'');
+            doc.text(`${i1+1}: ${ans1} ${risk1}`, colX[0], y);
+            doc.text(`${i2+1}: ${ans2} ${risk2}`, colX[1], y);
+            doc.text(`${i3+1}: ${ans3} ${risk3}`, colX[2], y);
+            y += 14;
+        }
+        y += 10;
+
+        // Gráficos lado a lado
+        try {
+            const pieCanvas = document.getElementById('pieChart');
+            const barCanvas = document.getElementById('barChart');
+            if (pieCanvas && barCanvas) {
+                const pieImg = pieCanvas.toDataURL('image/png');
+                const barImg = barCanvas.toDataURL('image/png');
+                doc.addImage(pieImg, 'PNG', 40, y, 220, 100);
+                doc.addImage(barImg, 'PNG', 300, y, 220, 100);
+            }
+        } catch (e) {}
+
+        // Rodapé com copyright
+        doc.setFontSize(7);
+        doc.setTextColor(120, 120, 120);
+        doc.text('© 2009 Diana Robins, Deborah Fein, & Marianne Barton. www.mchatscreen.com', 40, 770);
+
+        doc.save(`mchat_${patientData.name || 'paciente'}.pdf`);
+    }
+
+    // ---------- Inicialização ----------
+    window.addEventListener('DOMContentLoaded', () => {
+        renderQuestions();
+        loadStoredPatient();
+        updateProgress();
+
+        document.getElementById('savePatientBtn').addEventListener('click', saveCurrentPatient);
+        document.getElementById('clearBtn').addEventListener('click', clearAll);
+
+        document.getElementById('loadDataBtn').addEventListener('click', () => {
+            document.getElementById('fileInput').click();
+        });
+        document.getElementById('fileInput').addEventListener('change', (e) => {
+            if (e.target.files[0]) loadFromJSON(e.target.files[0]);
+            e.target.value = '';
+        });
+
+        document.getElementById('calcBtn').addEventListener('click', () => {
+            const sc = computeScore();
+            if (!sc) { alert('Responda todas as perguntas.'); return; }
+            displayResult(sc.score, sc.responses);
+        });
+
+        document.getElementById('pdfBtn').addEventListener('click', generatePDF);
+    });
+})();
+</script>
+</body>
+</html>
