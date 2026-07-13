@@ -3,628 +3,1856 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>M-CHAT-R™ Profissional | Triagem TEA (16-30 meses)</title>
-    <!-- Chart.js e Font Awesome -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Fonte Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <title>Protocolo Clínico de Avaliação Sensorial Infantil</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(145deg, #eef2f7, #d9e2ef);
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f0f7 100%);
             min-height: 100vh;
-            padding: 2rem 1rem;
-            display: flex;
-            justify-content: center;
+            padding: 24px;
+            color: #1e2a41;
         }
-        .container {
-            max-width: 1300px;
-            width: 100%;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 2.5rem;
-            box-shadow: 0 30px 50px rgba(0,10,30,0.2);
-            overflow: hidden;
+        #app {
+            max-width: 1280px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 20, 40, 0.12), 0 8px 24px rgba(0, 0, 0, 0.04);
+            padding: 28px 32px 40px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
+
+        /* Cabeçalho */
         .header {
-            background: linear-gradient(135deg, #0b2545, #1b3b5c);
-            color: white;
-            padding: 1.8rem 2.5rem;
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             justify-content: space-between;
-            flex-wrap: wrap;
-            border-bottom: 4px solid #ffb74d;
-        }
-        .header h1 { font-size: 2.2rem; display: flex; align-items: center; gap: 0.8rem; }
-        .header h1 i { color: #ffb74d; }
-        .copyright {
-            background: rgba(255,255,255,0.1);
-            padding: 0.4rem 1.2rem;
-            border-radius: 3rem;
-            font-size: 0.8rem;
-        }
-        .content { padding: 2rem 2.5rem; }
-
-        .section-title {
-            display: flex;
             align-items: center;
-            gap: 0.7rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #0b2545;
-            margin-bottom: 1.2rem;
-            border-left: 7px solid #ff9f1c;
-            padding-left: 1rem;
+            margin-bottom: 24px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid rgba(30, 60, 95, 0.15);
         }
-
-        .patient-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-            gap: 1rem;
-            background: #f7faff;
-            padding: 1.5rem;
-            border-radius: 2rem;
-            margin-bottom: 1.5rem;
+        .header-left h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e3c5f, #2d6fa8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.5px;
         }
-        .field {
+        .header-left .sub {
+            font-size: 1rem;
+            color: #3e5a76;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .header-actions {
             display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
         }
-        .field label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #2a405c;
-        }
-        .field input, .field select {
-            padding: 0.8rem 1rem;
-            border: 2px solid #dbe1ed;
-            border-radius: 1.2rem;
-            font-size: 0.95rem;
+        .busca-box {
+            display: flex;
+            gap: 8px;
             background: white;
-        }
-        .field input:focus, .field select:focus {
-            border-color: #2f6690;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(47,102,144,0.15);
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin: 1rem 0 1.5rem;
-        }
-        .btn {
-            padding: 0.8rem 1.8rem;
-            border: none;
-            border-radius: 2.5rem;
-            font-weight: 600;
-            display: inline-flex;
+            padding: 6px 12px 6px 16px;
+            border-radius: 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+            border: 1px solid #d0dce8;
             align-items: center;
-            gap: 0.5rem;
+        }
+        .busca-box input {
+            border: none;
+            padding: 8px 4px;
+            font-size: 0.95rem;
+            min-width: 160px;
+            background: transparent;
+            outline: none;
+        }
+        .busca-box input::placeholder {
+            color: #8a9db0;
+        }
+        .busca-box button {
+            background: #1e3c5f;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-weight: 600;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: 0.2s;
-            background: white;
-            border: 1px solid #c0cee2;
+            white-space: nowrap;
         }
-        .btn-primary { background: #1d3a5c; color: white; border: none; }
-        .btn-primary:hover { background: #0b2a48; transform: translateY(-2px); }
-        .btn-success { background: #1a7431; color: white; border: none; }
-        .btn-outline { border: 1px solid #1d3a5c; color: #1d3a5c; background: transparent; }
-        .btn-outline:hover { background: #e9f0fc; }
-
-        .risk-grid {
-            display: grid;
-            grid-template-columns: repeat(3,1fr);
-            gap: 1rem;
-            margin: 2rem 0;
+        .busca-box button:hover {
+            background: #14304e;
+            transform: scale(1.02);
         }
-        .risk-card {
-            background: white;
-            border-radius: 2rem;
-            padding: 1rem;
-            text-align: center;
+        .btn-salvar {
+            background: linear-gradient(135deg, #1e3c5f, #2d6fa8);
+            color: white;
+            border: none;
+            border-radius: 40px;
+            padding: 10px 28px;
             font-weight: 600;
-            border-left: 8px solid;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(45, 111, 168, 0.25);
         }
-        .risk-low { background: #e3f5e7; border-left-color: #2ecc71; }
-        .risk-med { background: #fff1d4; border-left-color: #f39c12; }
-        .risk-high { background: #ffe4e2; border-left-color: #e74c3c; }
-        .risk-card span { font-size: 2rem; font-weight: 800; display: block; }
+        .btn-salvar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 111, 168, 0.35);
+        }
+        .btn-salvar:active {
+            transform: translateY(0);
+        }
+        .toast {
+            background: #1e3c5f;
+            color: white;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .toast.show {
+            display: inline-block;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-        .questions-grid {
+        /* Dados gerais */
+        .dados-crianca {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin: 1rem 0;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px 18px;
+            background: rgba(247, 250, 252, 0.7);
+            backdrop-filter: blur(2px);
+            padding: 16px 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
         }
-        .q-item {
+        .dados-crianca label {
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #2c405a;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .dados-crianca input {
+            padding: 8px 12px;
+            border: 1px solid #d0dce8;
+            border-radius: 10px;
+            font-size: 0.95rem;
             background: white;
-            border-radius: 1.5rem;
-            padding: 1rem 1.2rem;
-            border: 1px solid #e0eaf5;
+            transition: 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
         }
-        .q-num {
-            background: #d4e0f0;
-            color: #0b2545;
-            width: 2rem;
-            height: 2rem;
-            border-radius: 50%;
+        .dados-crianca input:focus {
+            border-color: #2d6fa8;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(45, 111, 168, 0.12);
+        }
+
+        /* Navegação por abas */
+        .tab-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            margin: 16px 0 20px;
+            border-bottom: 2px solid rgba(30, 60, 95, 0.1);
+            padding-bottom: 12px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #3e5a76;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            background: rgba(237, 242, 247, 0.5);
+            backdrop-filter: blur(2px);
+        }
+        .tab-btn:hover {
+            background: #d6e1ed;
+            transform: translateY(-2px);
+        }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #1e3c5f, #2d6fa8);
+            color: white;
+            box-shadow: 0 4px 14px rgba(30, 60, 95, 0.2);
+        }
+        .tab-pane {
+            display: none;
+            animation: fadePane 0.3s ease;
+            padding-top: 8px;
+        }
+        .tab-pane.active {
+            display: block;
+        }
+        @keyframes fadePane {
+            0% {
+                opacity: 0.3;
+                transform: translateY(8px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos gerais de formulário */
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1e3c5f;
+            border-left: 6px solid #2d6fa8;
+            padding-left: 16px;
+            background: linear-gradient(135deg, #1e3c5f 60%, #3e5a76);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        h3 {
+            font-size: 1.2rem;
+            margin: 20px 0 12px;
+            color: #1e3c5f;
+            font-weight: 600;
+        }
+        .descricao-escala {
+            background: rgba(242, 246, 251, 0.7);
+            backdrop-filter: blur(2px);
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            border-left: 5px solid #2d6fa8;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .grid-check {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 6px 18px;
+            margin-bottom: 16px;
+            background: rgba(255,255,255,0.3);
+            padding: 12px 16px;
+            border-radius: 14px;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .grid-check label {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
+            gap: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: 0.1s;
         }
-        .q-text { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.5rem; }
-        .q-opts { display: flex; gap: 1.2rem; }
-        .q-opts label { display: flex; align-items: center; gap: 0.3rem; cursor: pointer; }
+        .grid-check label:hover {
+            color: #1e3c5f;
+        }
+        .grid-check input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #2d6fa8;
+            border-radius: 4px;
+        }
 
-        .progress-bar {
-            height: 0.6rem;
-            background: #e3eaf3;
-            border-radius: 2rem;
-            margin: 1rem 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 20px;
+            font-size: 0.9rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
         }
-        .progress-fill { height: 100%; background: #2c8555; width: 0%; border-radius: 2rem; }
-
-        .charts-row {
-            display: grid;
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        .chart-card {
+        table th, table td {
+            border: 1px solid #dce4ed;
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: middle;
             background: white;
-            border-radius: 1.8rem;
-            padding: 1rem;
-            border: 1px solid #dce5f0;
         }
-
-        .result-box {
-            border-radius: 2rem;
-            padding: 1.5rem;
-            text-align: center;
+        table th {
+            background: #e8eef6;
             font-weight: 600;
-            margin: 1.5rem 0;
+            color: #1e3c5f;
+        }
+        table td:first-child {
+            font-weight: 500;
+        }
+        .radio-group {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .radio-group label:hover {
+            background: rgba(45, 111, 168, 0.06);
+        }
+        .radio-group input[type="radio"] {
+            margin: 0;
+            accent-color: #2d6fa8;
+            width: 16px;
+            height: 16px;
         }
 
-        .footer-note {
-            margin-top: 2rem;
-            font-size: 0.7rem;
-            color: #3c5777;
-            text-align: center;
-            border-top: 1px dashed #b3c7e0;
-            padding-top: 1rem;
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #d0dce8;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        textarea:focus, input[type="text"]:focus {
+            border-color: #2d6fa8;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(45, 111, 168, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        .campo-texto {
+            margin: 16px 0;
+        }
+        .campo-texto label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            color: #1e3c5f;
+            font-size: 0.95rem;
         }
 
-        @media (max-width: 700px) {
-            .questions-grid { grid-template-columns: 1fr; }
-            .charts-row { grid-template-columns: 1fr; }
-            .risk-grid { grid-template-columns: 1fr; }
+        .classificacao-global {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+            background: rgba(247, 250, 252, 0.6);
+            backdrop-filter: blur(2px);
+            padding: 14px 22px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .classificacao-global label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 30px;
+            transition: 0.1s;
+        }
+        .classificacao-global label:hover {
+            background: rgba(45, 111, 168, 0.05);
+        }
+        .classificacao-global input[type="radio"] {
+            accent-color: #2d6fa8;
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-acao {
+            background: linear-gradient(135deg, #1e3c5f, #2d6fa8);
+            color: white;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-right: 12px;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(45, 111, 168, 0.2);
+        }
+        .btn-acao:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 111, 168, 0.3);
+        }
+        .btn-acao.secundario {
+            background: #6c8aa8;
+            box-shadow: 0 4px 12px rgba(108, 138, 168, 0.2);
+        }
+        .btn-acao.secundario:hover {
+            background: #53708d;
+        }
+        .btn-acao.perigo {
+            background: #b13e4b;
+            box-shadow: 0 4px 12px rgba(177, 62, 75, 0.2);
+        }
+        .btn-acao.perigo:hover {
+            background: #8f313c;
+        }
+
+        .rodape {
+            margin-top: 32px;
+            border-top: 2px solid rgba(30, 60, 95, 0.1);
+            padding-top: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 20px;
+        }
+        .rodape .assinatura {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1 1 260px;
+        }
+        .rodape .assinatura input {
+            width: 100%;
+            max-width: 340px;
+        }
+        .rodape .botoes-rodape {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .matriz-tabela textarea {
+            min-height: 44px;
+            font-size: 0.85rem;
+            padding: 6px 10px;
+        }
+        .matriz-tabela td {
+            padding: 6px 8px;
+            vertical-align: top;
+        }
+
+        @media (max-width: 760px) {
+            #app {
+                padding: 18px 16px;
+            }
+            .dados-crianca {
+                grid-template-columns: 1fr 1fr;
+            }
+            .tab-btn {
+                font-size: 0.75rem;
+                padding: 6px 14px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .header-actions {
+                flex-wrap: wrap;
+                justify-content: stretch;
+            }
+            .busca-box {
+                flex: 1;
+            }
+            .busca-box input {
+                min-width: 100px;
+                flex: 1;
+            }
+            .btn-salvar {
+                width: 100%;
+                justify-content: center;
+            }
+            .grid-check {
+                grid-template-columns: 1fr;
+            }
+            table {
+                font-size: 0.8rem;
+            }
+            table th, table td {
+                padding: 6px 8px;
+            }
+            .radio-group label {
+                font-size: 0.7rem;
+                padding: 2px 4px;
+            }
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0.2in;
+            }
+            #app {
+                box-shadow: none;
+                padding: 10px;
+                backdrop-filter: none;
+                background: white;
+            }
+            .tab-btn, .header-actions, .btn-acao, .btn-salvar, .busca-box, .toast, .no-print {
+                display: none !important;
+            }
+            .tab-pane {
+                display: block !important;
+                page-break-after: always;
+            }
+            .tab-pane:last-child {
+                page-break-after: avoid;
+            }
+            .tab-nav {
+                display: none;
+            }
+            .dados-crianca input {
+                border: none;
+                border-bottom: 1px solid #aaa;
+                background: transparent;
+            }
+            textarea {
+                border: none;
+                border-bottom: 1px solid #aaa;
+                background: transparent;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1><i class="fas fa-hand-holding-heart"></i> M‑CHAT‑R™</h1>
-        <div class="copyright">© 2009 Robins, Fein & Barton · trad. Dra. Rosa Resegue</div>
-    </div>
-    <div class="content">
-        <!-- CADASTRO -->
-        <div>
-            <div class="section-title"><i class="fas fa-id-card"></i> Dados da criança</div>
-            <div class="patient-grid">
-                <div class="field"><label>Nome completo</label><input type="text" id="patientName" placeholder="Ex.: Sofia M. Oliveira"></div>
-                <div class="field"><label>Data nascimento</label><input type="date" id="birthDate"></div>
-                <div class="field"><label>Responsável</label><input type="text" id="parentName" placeholder="Nome do responsável"></div>
-                <div class="field"><label>Telefone</label><input type="tel" id="phone" placeholder="(11) 99999-9999"></div>
-                <div class="field">
-                    <label>Avaliador</label>
-                    <select id="evaluator">
-                        <option value="">Selecione</option>
-                        <option value="pediatra">Pediatra</option>
-                        <option value="psicologo">Psicólogo(a)</option>
-                        <option value="fono">Fonoaudiólogo(a)</option>
-                        <option value="terapeuta_ocupacional">Terapeuta Ocupacional</option>
-                        <option value="outros">Outro profissional</option>
-                    </select>
+    <div id="app">
+
+        <!-- Cabeçalho com busca e salvar -->
+        <div class="header">
+            <div class="header-left">
+                <h1>Protocolo Clínico de Avaliação Sensorial Infantil</h1>
+                <div class="sub">Dra. Fátima Velame — Terapeuta Ocupacional</div>
+            </div>
+            <div class="header-actions">
+                <div class="busca-box">
+                    <input type="text" id="buscaNome" placeholder="Buscar criança pelo nome..." aria-label="Buscar criança">
+                    <button id="btnCarregar" title="Carregar dados da criança">Carregar</button>
+                </div>
+                <button class="btn-salvar" id="btnSalvar">💾 Salvar Dados</button>
+                <span class="toast" id="toastMsg">✅ Dados salvos!</span>
+            </div>
+        </div>
+
+        <!-- Dados gerais da criança -->
+        <div class="dados-crianca" id="dadosGerais">
+            <label>Nome da Criança <input type="text" id="nomeCrianca" placeholder="Digite o nome"></label>
+            <label>Idade <input type="text" id="idadeCrianca" placeholder="Ex: 4 anos"></label>
+            <label>Data de Nascimento <input type="text" id="dataNasc" placeholder="DD/MM/AAAA"></label>
+            <label>Data da Avaliação <input type="text" id="dataAval" placeholder="DD/MM/AAAA"></label>
+            <label>Responsável <input type="text" id="responsavel" placeholder="Nome do responsável"></label>
+            <label>Terapeuta Ocupacional <input type="text" id="terapeuta" placeholder="Seu nome"></label>
+        </div>
+
+        <!-- Navegação por abas -->
+        <nav class="tab-nav" id="tabNav">
+            <button class="tab-btn active" data-tab="tab-participacao">Participação Ocupacional</button>
+            <button class="tab-btn" data-tab="tab-autorregulacao">Autorregulação</button>
+            <button class="tab-btn" data-tab="tab-respostas">Respostas Sensoriais</button>
+            <button class="tab-btn" data-tab="tab-perfil">Perfil Sensorial Geral</button>
+            <button class="tab-btn" data-tab="tab-modulacao">Modulação Sensorial</button>
+            <button class="tab-btn" data-tab="tab-impacto">Impacto Funcional</button>
+            <button class="tab-btn" data-tab="tab-interpretacao">Interpretação Clínica</button>
+            <button class="tab-btn" data-tab="tab-protocolo">Protocolo Global</button>
+            <button class="tab-btn" data-tab="tab-entrevista">Entrevista Escolar</button>
+            <button class="tab-btn" data-tab="tab-matriz">Matriz Escolar</button>
+            <button class="tab-btn" data-tab="tab-protocolo-escolar">Protocolo Global Escolar</button>
+        </nav>
+
+        <!-- Conteúdo das abas -->
+        <div id="tabContent">
+
+            <!-- 1. Participação Ocupacional -->
+            <div id="tab-participacao" class="tab-pane active">
+                <h2>Checklist de Observação Clínica — Participação Ocupacional</h2>
+                <div class="descricao-escala">
+                    <strong>Sem dificuldade</strong> — Realiza a atividade de forma adequada à idade. &nbsp;|&nbsp;
+                    <strong>Dificuldade leve</strong> — Pequenas dificuldades que não interferem significativamente. &nbsp;|&nbsp;
+                    <strong>Dificuldade moderada</strong> — Dificuldades que interferem parcialmente. &nbsp;|&nbsp;
+                    <strong>Dificuldade importante</strong> — Dificuldades que interferem significativamente.
+                </div>
+
+                <h3>Domínios Observados Durante a Sessão — Brincar</h3>
+                <div class="grid-check" id="grid-participacao">
+                    <label><input type="checkbox" class="check-partic" data-key="part_inicia"> Inicia brincadeiras espontaneamente</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_mantem"> Mantém brincadeira funcional</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_simbolica"> Demonstra brincadeira simbólica</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_compartilha"> Compartilha brincadeiras</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_participacao"> Mantém participação</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_ajuda_constante"> Necessita ajuda constante</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_conclui"> Conclui tarefas propostas</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_interage_terapeuta"> Interage com terapeuta</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_interage_familiares"> Interage com familiares presentes</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_busca_interacao"> Busca interação espontânea</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_organiza"> Organiza materiais</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_solicita_ajuda"> Solicita ajuda adequadamente</label>
+                    <label><input type="checkbox" class="check-partic" data-key="part_independencia"> Demonstra independência funcional</label>
+                </div>
+
+                <div class="campo-texto">
+                    <label>Itens Observados</label>
+                    <textarea id="obsParticipacao" rows="3" placeholder="Descreva outros comportamentos observados..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Considerações Clínicas</label>
+                    <textarea id="considParticipacao" rows="3" placeholder="Análise clínica..."></textarea>
                 </div>
             </div>
-            <div class="btn-group">
-                <button class="btn btn-primary" id="savePatientBtn"><i class="fas fa-save"></i> Salvar cadastro</button>
-                <button class="btn btn-outline" id="loadDataBtn"><i class="fas fa-upload"></i> Carregar avaliação (JSON)</button>
-                <input type="file" id="fileInput" accept=".json" style="display: none;">
-                <button class="btn btn-outline" id="clearBtn"><i class="fas fa-undo-alt"></i> Limpar</button>
-            </div>
-        </div>
 
-        <!-- TABELA DE RISCO -->
-        <div class="risk-grid">
-            <div class="risk-card risk-low"><span>0–2</span> Baixo Risco <br><small>repetir aos 24 meses</small></div>
-            <div class="risk-card risk-med"><span>3–7</span> Risco Moderado <br><small>aplicar entrevista</small></div>
-            <div class="risk-card risk-high"><span>8–20</span> Alto Risco <br><small>encaminhamento</small></div>
-        </div>
-
-        <!-- PROGRESSO -->
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-
-        <!-- PERGUNTAS -->
-        <form id="mchatForm">
-            <div class="questions-grid" id="questionsGrid"></div>
-            <div class="btn-group" style="justify-content: center; margin-top: 2rem;">
-                <button type="button" class="btn btn-primary" id="calcBtn" style="padding:1rem 2.5rem;"><i class="fas fa-calculator"></i> Calcular pontuação</button>
-                <button type="button" class="btn btn-success" id="pdfBtn"><i class="fas fa-file-pdf"></i> PDF (1 página)</button>
-            </div>
-        </form>
-
-        <!-- RESULTADO E GRÁFICOS -->
-        <div id="resultArea"></div>
-        <div class="charts-row" id="chartsContainer" style="display: none;">
-            <div class="chart-card"><div style="font-weight:600; margin-bottom:0.5rem;"><i class="fas fa-chart-pie"></i> Proporção</div><canvas id="pieChart" style="max-height:150px;"></canvas></div>
-            <div class="chart-card"><div style="font-weight:600; margin-bottom:0.5rem;"><i class="fas fa-chart-bar"></i> Itens com risco</div><canvas id="barChart" style="max-height:150px;"></canvas></div>
-        </div>
-
-        <!-- RODAPÉ COPYRIGHT -->
-        <div class="footer-note">
-            <i class="far fa-copyright"></i> 2009 Diana Robins, Deborah Fein, & Marianne Barton. Tradução: Dra. Rosa Miranda Resegue.  
-            Uso obrigatório do instrumento completo. www.mchatscreen.com
-        </div>
-    </div>
-</div>
-
-<script>
-(function() {
-    // ---------- PERGUNTAS OFICIAIS (com exemplos) ----------
-    const QUESTIONS = [
-        "Se você apontar para qualquer coisa do outro lado do cômodo, sua criança olha para o que você está apontando? (Ex.: brinquedo ou animal)",
-        "Alguma vez você já se perguntou se sua criança poderia ser surda?",
-        "Sua criança brinca de faz-de-conta? (Ex.: finge beber em copo vazio, falar ao telefone, dar comida a boneca)",
-        "Sua criança gosta de subir nas coisas? (Ex.: móveis, escadas, brinquedos de parque)",
-        "Sua criança faz movimentos incomuns com os dedos perto dos olhos? (Ex.: abana os dedos perto dos olhos)",
-        "Sua criança aponta com o dedo para pedir algo ou conseguir ajuda? (Ex.: aponta para alimento fora do alcance)",
-        "Sua criança aponta com o dedo para lhe mostrar algo interessante? (Ex.: avião no céu, caminhão na estrada)",
-        "Sua criança interessa-se por outras crianças? (Ex.: observa, sorri ou aproxima-se)",
-        "Sua criança mostra-lhe coisas, trazendo ou segurando, apenas para compartilhar? (Ex.: flor, brinquedo)",
-        "Sua criança responde quando você a chama pelo nome? (Ex.: olha, balbucia, para o que faz)",
-        "Quando você sorri para sua criança, ela sorri de volta para você?",
-        "Sua criança fica incomodada com ruídos do dia a dia? (Ex.: aspirador, música alta, gritos)",
-        "Sua criança já anda?",
-        "Sua criança olha você nos olhos quando você fala, brinca ou veste ela?",
-        "Sua criança tenta imitar o que você faz? (Ex.: dar tchau, bater palmas, sons engraçados)",
-        "Se você virar a cabeça para olhar algo, sua criança olha em volta para ver o que você está olhando?",
-        "Sua criança busca que você preste atenção nela? (Ex.: olha para receber elogio, diz 'olha')",
-        "Sua criança compreende quando você lhe diz para fazer algo? (Ex.: 'ponha o livro na cadeira', sem apontar)",
-        "Quando algo novo acontece, sua criança olha para seu rosto para ver sua reação? (Ex.: barulho estranho)",
-        "Sua criança gosta de atividades com movimento? (Ex.: ser balançada, pular no colo)"
-    ];
-    const SPECIAL = [1,4,11]; // itens 2,5,12 (0-index)
-
-    // Estado
-    let patientData = {};
-    let chartInstances = {};
-
-    // ---------- Utils ----------
-    function loadStoredPatient() {
-        try {
-            const p = localStorage.getItem('mchatCurrentPatient');
-            if (p) {
-                patientData = JSON.parse(p);
-                document.getElementById('patientName').value = patientData.name || '';
-                document.getElementById('birthDate').value = patientData.birthDate || '';
-                document.getElementById('parentName').value = patientData.parentName || '';
-                document.getElementById('phone').value = patientData.phone || '';
-                document.getElementById('evaluator').value = patientData.evaluator || '';
-            }
-        } catch (e) {}
-    }
-
-    function saveCurrentPatient() {
-        patientData = {
-            name: document.getElementById('patientName').value,
-            birthDate: document.getElementById('birthDate').value,
-            parentName: document.getElementById('parentName').value,
-            phone: document.getElementById('phone').value,
-            evaluator: document.getElementById('evaluator').value
-        };
-        localStorage.setItem('mchatCurrentPatient', JSON.stringify(patientData));
-        alert('✅ Dados salvos');
-    }
-
-    function clearAll() {
-        if (confirm('Limpar todos os dados e respostas?')) {
-            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
-            document.getElementById('patientName').value = '';
-            document.getElementById('birthDate').value = '';
-            document.getElementById('parentName').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('evaluator').value = '';
-            patientData = {};
-            localStorage.removeItem('mchatCurrentPatient');
-            updateProgress();
-            document.getElementById('resultArea').innerHTML = '';
-            document.getElementById('chartsContainer').style.display = 'none';
-        }
-    }
-
-    // ---------- Renderizar perguntas ----------
-    function renderQuestions() {
-        const grid = document.getElementById('questionsGrid');
-        grid.innerHTML = '';
-        QUESTIONS.forEach((txt, i) => {
-            const div = document.createElement('div');
-            div.className = 'q-item';
-            div.innerHTML = `
-                <div class="q-num">${i+1}</div>
-                <div class="q-text">${txt}</div>
-                <div class="q-opts">
-                    <label><input type="radio" name="q${i}" value="sim"> Sim</label>
-                    <label><input type="radio" name="q${i}" value="nao"> Não</label>
+            <!-- 2. Autorregulação e Comportamento -->
+            <div id="tab-autorregulacao" class="tab-pane">
+                <h2>Checklist de Observação Clínica — Autorregulação e Comportamento</h2>
+                <table id="tabela-autorreg">
+                    <thead>
+                        <tr><th style="width:40%;">Comportamento</th><th style="width:20%;">Adequado</th><th style="width:20%;">Em Observação</th><th style="width:20%;">Alterado</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="4">1. Autorregulação</th></tr>
+                        <tr>
+                            <td>Autorregulação (global)</td>
+                            <td><label><input type="radio" name="autoreg_global" value="adequado" data-key="autoreg_global"></label></td>
+                            <td><label><input type="radio" name="autoreg_global" value="observacao" data-key="autoreg_global"></label></td>
+                            <td><label><input type="radio" name="autoreg_global" value="alterado" data-key="autoreg_global"></label></td>
+                        </tr>
+                        <tr><td>Necessita auxílio constante para organização</td>
+                            <td><label><input type="radio" name="autoreg_auxilio" value="adequado" data-key="autoreg_auxilio"></label></td>
+                            <td><label><input type="radio" name="autoreg_auxilio" value="observacao" data-key="autoreg_auxilio"></label></td>
+                            <td><label><input type="radio" name="autoreg_auxilio" value="alterado" data-key="autoreg_auxilio"></label></td>
+                        </tr>
+                        <tr><td>Recupera-se rapidamente após frustração</td>
+                            <td><label><input type="radio" name="autoreg_recupera" value="adequado" data-key="autoreg_recupera"></label></td>
+                            <td><label><input type="radio" name="autoreg_recupera" value="observacao" data-key="autoreg_recupera"></label></td>
+                            <td><label><input type="radio" name="autoreg_recupera" value="alterado" data-key="autoreg_recupera"></label></td>
+                        </tr>
+                        <tr><td>Apresenta crises comportamentais</td>
+                            <td><label><input type="radio" name="autoreg_crises" value="adequado" data-key="autoreg_crises"></label></td>
+                            <td><label><input type="radio" name="autoreg_crises" value="observacao" data-key="autoreg_crises"></label></td>
+                            <td><label><input type="radio" name="autoreg_crises" value="alterado" data-key="autoreg_crises"></label></td>
+                        </tr>
+                        <tr><th colspan="4">2. Atenção</th></tr>
+                        <tr>
+                            <td>Atenção (global)</td>
+                            <td><label><input type="radio" name="atencao_global" value="adequado" data-key="atencao_global"></label></td>
+                            <td><label><input type="radio" name="atencao_global" value="observacao" data-key="atencao_global"></label></td>
+                            <td><label><input type="radio" name="atencao_global" value="alterado" data-key="atencao_global"></label></td>
+                        </tr>
+                        <tr><td>Mantém foco nas atividades</td>
+                            <td><label><input type="radio" name="atencao_foco" value="adequado" data-key="atencao_foco"></label></td>
+                            <td><label><input type="radio" name="atencao_foco" value="observacao" data-key="atencao_foco"></label></td>
+                            <td><label><input type="radio" name="atencao_foco" value="alterado" data-key="atencao_foco"></label></td>
+                        </tr>
+                        <tr><td>Alterna atenção adequadamente</td>
+                            <td><label><input type="radio" name="atencao_alterna" value="adequado" data-key="atencao_alterna"></label></td>
+                            <td><label><input type="radio" name="atencao_alterna" value="observacao" data-key="atencao_alterna"></label></td>
+                            <td><label><input type="radio" name="atencao_alterna" value="alterado" data-key="atencao_alterna"></label></td>
+                        </tr>
+                        <tr><td>Distrai-se facilmente</td>
+                            <td><label><input type="radio" name="atencao_distrai" value="adequado" data-key="atencao_distrai"></label></td>
+                            <td><label><input type="radio" name="atencao_distrai" value="observacao" data-key="atencao_distrai"></label></td>
+                            <td><label><input type="radio" name="atencao_distrai" value="alterado" data-key="atencao_distrai"></label></td>
+                        </tr>
+                        <tr><th colspan="4">3. Comportamento</th></tr>
+                        <tr>
+                            <td>Comportamento (global)</td>
+                            <td><label><input type="radio" name="comport_global" value="adequado" data-key="comport_global"></label></td>
+                            <td><label><input type="radio" name="comport_global" value="observacao" data-key="comport_global"></label></td>
+                            <td><label><input type="radio" name="comport_global" value="alterado" data-key="comport_global"></label></td>
+                        </tr>
+                        <tr><td>Segue instruções simples</td>
+                            <td><label><input type="radio" name="comport_instrucoes" value="adequado" data-key="comport_instrucoes"></label></td>
+                            <td><label><input type="radio" name="comport_instrucoes" value="observacao" data-key="comport_instrucoes"></label></td>
+                            <td><label><input type="radio" name="comport_instrucoes" value="alterado" data-key="comport_instrucoes"></label></td>
+                        </tr>
+                        <tr><td>Tolera limites</td>
+                            <td><label><input type="radio" name="comport_limites" value="adequado" data-key="comport_limites"></label></td>
+                            <td><label><input type="radio" name="comport_limites" value="observacao" data-key="comport_limites"></label></td>
+                            <td><label><input type="radio" name="comport_limites" value="alterado" data-key="comport_limites"></label></td>
+                        </tr>
+                        <tr><td>Demonstra impulsividade</td>
+                            <td><label><input type="radio" name="comport_impulsivo" value="adequado" data-key="comport_impulsivo"></label></td>
+                            <td><label><input type="radio" name="comport_impulsivo" value="observacao" data-key="comport_impulsivo"></label></td>
+                            <td><label><input type="radio" name="comport_impulsivo" value="alterado" data-key="comport_impulsivo"></label></td>
+                        </tr>
+                        <tr><td>Necessita redirecionamento frequente</td>
+                            <td><label><input type="radio" name="comport_redireciona" value="adequado" data-key="comport_redireciona"></label></td>
+                            <td><label><input type="radio" name="comport_redireciona" value="observacao" data-key="comport_redireciona"></label></td>
+                            <td><label><input type="radio" name="comport_redireciona" value="alterado" data-key="comport_redireciona"></label></td>
+                        </tr>
+                        <tr><th colspan="4">4. Transições</th></tr>
+                        <tr>
+                            <td>Transições (global)</td>
+                            <td><label><input type="radio" name="trans_global" value="adequado" data-key="trans_global"></label></td>
+                            <td><label><input type="radio" name="trans_global" value="observacao" data-key="trans_global"></label></td>
+                            <td><label><input type="radio" name="trans_global" value="alterado" data-key="trans_global"></label></td>
+                        </tr>
+                        <tr><td>Tolera mudanças de atividade</td>
+                            <td><label><input type="radio" name="trans_mudanca" value="adequado" data-key="trans_mudanca"></label></td>
+                            <td><label><input type="radio" name="trans_mudanca" value="observacao" data-key="trans_mudanca"></label></td>
+                            <td><label><input type="radio" name="trans_mudanca" value="alterado" data-key="trans_mudanca"></label></td>
+                        </tr>
+                        <tr><td>Necessita preparação prévia</td>
+                            <td><label><input type="radio" name="trans_preparacao" value="adequado" data-key="trans_preparacao"></label></td>
+                            <td><label><input type="radio" name="trans_preparacao" value="observacao" data-key="trans_preparacao"></label></td>
+                            <td><label><input type="radio" name="trans_preparacao" value="alterado" data-key="trans_preparacao"></label></td>
+                        </tr>
+                        <tr><td>Apresenta resistência às transições</td>
+                            <td><label><input type="radio" name="trans_resistencia" value="adequado" data-key="trans_resistencia"></label></td>
+                            <td><label><input type="radio" name="trans_resistencia" value="observacao" data-key="trans_resistencia"></label></td>
+                            <td><label><input type="radio" name="trans_resistencia" value="alterado" data-key="trans_resistencia"></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Interpretação Clínica II — Estrutura de...</label>
+                    <textarea id="interpAutoreg" rows="3" placeholder="Análise geral da autorregulação e comportamento..."></textarea>
                 </div>
-            `;
-            grid.appendChild(div);
-        });
-        document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener('change', updateProgress));
-    }
-
-    function updateProgress() {
-        let answered = 0;
-        for (let i=0; i<20; i++) if (document.querySelector(`input[name="q${i}"]:checked`)) answered++;
-        document.getElementById('progressFill').style.width = (answered/20)*100 + '%';
-    }
-
-    // ---------- Calcular pontuação ----------
-    function computeScore() {
-        let score = 0;
-        const responses = [];
-        for (let i=0; i<20; i++) {
-            const sel = document.querySelector(`input[name="q${i}"]:checked`);
-            if (!sel) return null;
-            const ans = sel.value;
-            responses.push(ans);
-            const isSpecial = SPECIAL.includes(i);
-            const riskAns = isSpecial ? 'sim' : 'nao';
-            if (ans === riskAns) score++;
-        }
-        return { score, responses };
-    }
-
-    function getRiskLabel(score) {
-        if (score <= 2) return 'Baixo Risco';
-        if (score <= 7) return 'Risco Moderado';
-        return 'Alto Risco';
-    }
-
-    function displayResult(score, responses) {
-        const risk = getRiskLabel(score);
-        let bgClass = 'risk-low';
-        if (score >=3 && score<=7) bgClass = 'risk-med';
-        else if (score>=8) bgClass = 'risk-high';
-        let msg = '';
-        if (score<=2) msg = 'Repetir o M‑CHAT‑R aos 24 meses.';
-        else if (score<=7) msg = 'Aplicar a Entrevista de Seguimento (M‑CHAT‑R/F).';
-        else msg = 'Encaminhar para avaliação diagnóstica e intervenção imediata.';
-        const age = patientData.birthDate ? calculateAge(patientData.birthDate) + ' meses' : '';
-        document.getElementById('resultArea').innerHTML = `
-            <div class="result-box ${bgClass}">
-                <h2 style="font-size:2rem;">${score}/20 · ${risk}</h2>
-                <p style="font-size:1.1rem;">${msg}</p>
-                <p>${patientData.name || ''} ${age}</p>
             </div>
-        `;
-        document.getElementById('chartsContainer').style.display = 'grid';
-        generateCharts(score, responses);
-    }
 
-    function calculateAge(birth) {
-        if (!birth) return '';
-        const hoje = new Date(), nasc = new Date(birth);
-        return (hoje.getFullYear()-nasc.getFullYear())*12 + (hoje.getMonth()-nasc.getMonth());
-    }
+            <!-- 3. Respostas Sensoriais -->
+            <div id="tab-respostas" class="tab-pane">
+                <h2>Checklist de Observação Clínica — Respostas Sensoriais</h2>
+                <p style="margin-bottom:10px; color:#3e5a76;">Avalie os comportamentos observados durante a sessão, assinalando a frequência.</p>
+                <table id="tabela-respostas">
+                    <thead>
+                        <tr><th style="width:28%;">Sistema / Comportamento</th><th>Nunca</th><th>Raramente</th><th>Às vezes</th><th>Frequentemente</th><th>Sempre</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="6">Sistema Tátil</th></tr>
+                        <tr><td>Aceita diferentes texturas</td>
+                            <td><input type="radio" name="tatil_texturas" value="nunca" data-key="tatil_texturas"></td>
+                            <td><input type="radio" name="tatil_texturas" value="raramente" data-key="tatil_texturas"></td>
+                            <td><input type="radio" name="tatil_texturas" value="as vezes" data-key="tatil_texturas"></td>
+                            <td><input type="radio" name="tatil_texturas" value="frequentemente" data-key="tatil_texturas"></td>
+                            <td><input type="radio" name="tatil_texturas" value="sempre" data-key="tatil_texturas"></td>
+                        </tr>
+                        <tr><td>Demonstra desconforto ao toque</td>
+                            <td><input type="radio" name="tatil_desconforto" value="nunca" data-key="tatil_desconforto"></td>
+                            <td><input type="radio" name="tatil_desconforto" value="raramente" data-key="tatil_desconforto"></td>
+                            <td><input type="radio" name="tatil_desconforto" value="as vezes" data-key="tatil_desconforto"></td>
+                            <td><input type="radio" name="tatil_desconforto" value="frequentemente" data-key="tatil_desconforto"></td>
+                            <td><input type="radio" name="tatil_desconforto" value="sempre" data-key="tatil_desconforto"></td>
+                        </tr>
+                        <tr><td>Busca estímulos táteis</td>
+                            <td><input type="radio" name="tatil_busca" value="nunca" data-key="tatil_busca"></td>
+                            <td><input type="radio" name="tatil_busca" value="raramente" data-key="tatil_busca"></td>
+                            <td><input type="radio" name="tatil_busca" value="as vezes" data-key="tatil_busca"></td>
+                            <td><input type="radio" name="tatil_busca" value="frequentemente" data-key="tatil_busca"></td>
+                            <td><input type="radio" name="tatil_busca" value="sempre" data-key="tatil_busca"></td>
+                        </tr>
+                        <tr><th colspan="6">Sistema Auditivo</th></tr>
+                        <tr><td>Reage a sons ambientais</td>
+                            <td><input type="radio" name="audit_reage" value="nunca" data-key="audit_reage"></td>
+                            <td><input type="radio" name="audit_reage" value="raramente" data-key="audit_reage"></td>
+                            <td><input type="radio" name="audit_reage" value="as vezes" data-key="audit_reage"></td>
+                            <td><input type="radio" name="audit_reage" value="frequentemente" data-key="audit_reage"></td>
+                            <td><input type="radio" name="audit_reage" value="sempre" data-key="audit_reage"></td>
+                        </tr>
+                        <tr><td>Distrai-se facilmente (sonoro)</td>
+                            <td><input type="radio" name="audit_distrai" value="nunca" data-key="audit_distrai"></td>
+                            <td><input type="radio" name="audit_distrai" value="raramente" data-key="audit_distrai"></td>
+                            <td><input type="radio" name="audit_distrai" value="as vezes" data-key="audit_distrai"></td>
+                            <td><input type="radio" name="audit_distrai" value="frequentemente" data-key="audit_distrai"></td>
+                            <td><input type="radio" name="audit_distrai" value="sempre" data-key="audit_distrai"></td>
+                        </tr>
+                        <tr><td>Demonstra hipersensibilidade auditiva</td>
+                            <td><input type="radio" name="audit_hipersens" value="nunca" data-key="audit_hipersens"></td>
+                            <td><input type="radio" name="audit_hipersens" value="raramente" data-key="audit_hipersens"></td>
+                            <td><input type="radio" name="audit_hipersens" value="as vezes" data-key="audit_hipersens"></td>
+                            <td><input type="radio" name="audit_hipersens" value="frequentemente" data-key="audit_hipersens"></td>
+                            <td><input type="radio" name="audit_hipersens" value="sempre" data-key="audit_hipersens"></td>
+                        </tr>
+                        <tr><th colspan="6">Sistema Visual</th></tr>
+                        <tr><td>Mantém atenção visual</td>
+                            <td><input type="radio" name="visual_atencao" value="nunca" data-key="visual_atencao"></td>
+                            <td><input type="radio" name="visual_atencao" value="raramente" data-key="visual_atencao"></td>
+                            <td><input type="radio" name="visual_atencao" value="as vezes" data-key="visual_atencao"></td>
+                            <td><input type="radio" name="visual_atencao" value="frequentemente" data-key="visual_atencao"></td>
+                            <td><input type="radio" name="visual_atencao" value="sempre" data-key="visual_atencao"></td>
+                        </tr>
+                        <tr><td>Busca estímulos luminosos</td>
+                            <td><input type="radio" name="visual_busca_luz" value="nunca" data-key="visual_busca_luz"></td>
+                            <td><input type="radio" name="visual_busca_luz" value="raramente" data-key="visual_busca_luz"></td>
+                            <td><input type="radio" name="visual_busca_luz" value="as vezes" data-key="visual_busca_luz"></td>
+                            <td><input type="radio" name="visual_busca_luz" value="frequentemente" data-key="visual_busca_luz"></td>
+                            <td><input type="radio" name="visual_busca_luz" value="sempre" data-key="visual_busca_luz"></td>
+                        </tr>
+                        <tr><td>Apresenta sensibilidade visual</td>
+                            <td><input type="radio" name="visual_sensibilidade" value="nunca" data-key="visual_sensibilidade"></td>
+                            <td><input type="radio" name="visual_sensibilidade" value="raramente" data-key="visual_sensibilidade"></td>
+                            <td><input type="radio" name="visual_sensibilidade" value="as vezes" data-key="visual_sensibilidade"></td>
+                            <td><input type="radio" name="visual_sensibilidade" value="frequentemente" data-key="visual_sensibilidade"></td>
+                            <td><input type="radio" name="visual_sensibilidade" value="sempre" data-key="visual_sensibilidade"></td>
+                        </tr>
+                        <tr><th colspan="6">Sistema Vestibular</th></tr>
+                        <tr><td>Tolera movimentos</td>
+                            <td><input type="radio" name="vest_tolera" value="nunca" data-key="vest_tolera"></td>
+                            <td><input type="radio" name="vest_tolera" value="raramente" data-key="vest_tolera"></td>
+                            <td><input type="radio" name="vest_tolera" value="as vezes" data-key="vest_tolera"></td>
+                            <td><input type="radio" name="vest_tolera" value="frequentemente" data-key="vest_tolera"></td>
+                            <td><input type="radio" name="vest_tolera" value="sempre" data-key="vest_tolera"></td>
+                        </tr>
+                        <tr><td>Busca movimento constantemente</td>
+                            <td><input type="radio" name="vest_busca" value="nunca" data-key="vest_busca"></td>
+                            <td><input type="radio" name="vest_busca" value="raramente" data-key="vest_busca"></td>
+                            <td><input type="radio" name="vest_busca" value="as vezes" data-key="vest_busca"></td>
+                            <td><input type="radio" name="vest_busca" value="frequentemente" data-key="vest_busca"></td>
+                            <td><input type="radio" name="vest_busca" value="sempre" data-key="vest_busca"></td>
+                        </tr>
+                        <tr><td>Evita movimentos</td>
+                            <td><input type="radio" name="vest_evita" value="nunca" data-key="vest_evita"></td>
+                            <td><input type="radio" name="vest_evita" value="raramente" data-key="vest_evita"></td>
+                            <td><input type="radio" name="vest_evita" value="as vezes" data-key="vest_evita"></td>
+                            <td><input type="radio" name="vest_evita" value="frequentemente" data-key="vest_evita"></td>
+                            <td><input type="radio" name="vest_evita" value="sempre" data-key="vest_evita"></td>
+                        </tr>
+                        <tr><th colspan="6">Sistema Proprioceptivo</th></tr>
+                        <tr><td>Busca pressão profunda</td>
+                            <td><input type="radio" name="prop_busca_pressao" value="nunca" data-key="prop_busca_pressao"></td>
+                            <td><input type="radio" name="prop_busca_pressao" value="raramente" data-key="prop_busca_pressao"></td>
+                            <td><input type="radio" name="prop_busca_pressao" value="as vezes" data-key="prop_busca_pressao"></td>
+                            <td><input type="radio" name="prop_busca_pressao" value="frequentemente" data-key="prop_busca_pressao"></td>
+                            <td><input type="radio" name="prop_busca_pressao" value="sempre" data-key="prop_busca_pressao"></td>
+                        </tr>
+                        <tr><td>Utiliza força excessiva</td>
+                            <td><input type="radio" name="prop_forca" value="nunca" data-key="prop_forca"></td>
+                            <td><input type="radio" name="prop_forca" value="raramente" data-key="prop_forca"></td>
+                            <td><input type="radio" name="prop_forca" value="as vezes" data-key="prop_forca"></td>
+                            <td><input type="radio" name="prop_forca" value="frequentemente" data-key="prop_forca"></td>
+                            <td><input type="radio" name="prop_forca" value="sempre" data-key="prop_forca"></td>
+                        </tr>
+                        <tr><td>Demonstra baixa consciência corporal</td>
+                            <td><input type="radio" name="prop_consciencia" value="nunca" data-key="prop_consciencia"></td>
+                            <td><input type="radio" name="prop_consciencia" value="raramente" data-key="prop_consciencia"></td>
+                            <td><input type="radio" name="prop_consciencia" value="as vezes" data-key="prop_consciencia"></td>
+                            <td><input type="radio" name="prop_consciencia" value="frequentemente" data-key="prop_consciencia"></td>
+                            <td><input type="radio" name="prop_consciencia" value="sempre" data-key="prop_consciencia"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="obsRespostas" rows="3" placeholder="Observações adicionais..."></textarea>
+                </div>
+            </div>
 
-    function generateCharts(score, responses) {
-        Object.values(chartInstances).forEach(c => c?.destroy());
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        chartInstances.pie = new Chart(pieCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Risco', 'Sem risco'],
-                datasets: [{ data: [score, 20-score], backgroundColor: ['#c44545', '#3c8d5e'] }]
-            },
-            options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+            <!-- 4. Perfil Sensorial Geral -->
+            <div id="tab-perfil" class="tab-pane">
+                <h2>Checklist de Sinais Sensoriais — Perfil Sensorial Geral</h2>
+                <p style="margin-bottom:10px; color:#3e5a76;">Assinale os sinais sensoriais observados na criança.</p>
+                <table id="tabela-perfil">
+                    <thead>
+                        <tr><th style="width:40%;">Sistema / Sinal</th><th>Não observado</th><th>Observado ocasionalmente</th><th>Observado frequentemente</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="4">Sistema Tátil</th></tr>
+                        <tr><td>Evita determinadas texturas</td>
+                            <td><input type="radio" name="perfil_tatil_evita" value="nao" data-key="perfil_tatil_evita"></td>
+                            <td><input type="radio" name="perfil_tatil_evita" value="ocasional" data-key="perfil_tatil_evita"></td>
+                            <td><input type="radio" name="perfil_tatil_evita" value="frequente" data-key="perfil_tatil_evita"></td>
+                        </tr>
+                        <tr><td>Não gosta de sujeira nas mãos</td>
+                            <td><input type="radio" name="perfil_tatil_sujeira" value="nao" data-key="perfil_tatil_sujeira"></td>
+                            <td><input type="radio" name="perfil_tatil_sujeira" value="ocasional" data-key="perfil_tatil_sujeira"></td>
+                            <td><input type="radio" name="perfil_tatil_sujeira" value="frequente" data-key="perfil_tatil_sujeira"></td>
+                        </tr>
+                        <tr><td>Incomoda-se com roupas ou etiquetas</td>
+                            <td><input type="radio" name="perfil_tatil_roupas" value="nao" data-key="perfil_tatil_roupas"></td>
+                            <td><input type="radio" name="perfil_tatil_roupas" value="ocasional" data-key="perfil_tatil_roupas"></td>
+                            <td><input type="radio" name="perfil_tatil_roupas" value="frequente" data-key="perfil_tatil_roupas"></td>
+                        </tr>
+                        <tr><td>Busca tocar objetos constantemente</td>
+                            <td><input type="radio" name="perfil_tatil_busca" value="nao" data-key="perfil_tatil_busca"></td>
+                            <td><input type="radio" name="perfil_tatil_busca" value="ocasional" data-key="perfil_tatil_busca"></td>
+                            <td><input type="radio" name="perfil_tatil_busca" value="frequente" data-key="perfil_tatil_busca"></td>
+                        </tr>
+                        <tr><th colspan="4">Sistema Auditivo</th></tr>
+                        <tr><td>Sensibilidade a sons altos</td>
+                            <td><input type="radio" name="perfil_audit_sens" value="nao" data-key="perfil_audit_sens"></td>
+                            <td><input type="radio" name="perfil_audit_sens" value="ocasional" data-key="perfil_audit_sens"></td>
+                            <td><input type="radio" name="perfil_audit_sens" value="frequente" data-key="perfil_audit_sens"></td>
+                        </tr>
+                        <tr><td>Tapa os ouvidos frequentemente</td>
+                            <td><input type="radio" name="perfil_audit_tapa" value="nao" data-key="perfil_audit_tapa"></td>
+                            <td><input type="radio" name="perfil_audit_tapa" value="ocasional" data-key="perfil_audit_tapa"></td>
+                            <td><input type="radio" name="perfil_audit_tapa" value="frequente" data-key="perfil_audit_tapa"></td>
+                        </tr>
+                        <tr><td>Distrai-se facilmente com ruídos</td>
+                            <td><input type="radio" name="perfil_audit_distrai" value="nao" data-key="perfil_audit_distrai"></td>
+                            <td><input type="radio" name="perfil_audit_distrai" value="ocasional" data-key="perfil_audit_distrai"></td>
+                            <td><input type="radio" name="perfil_audit_distrai" value="frequente" data-key="perfil_audit_distrai"></td>
+                        </tr>
+                        <tr><th colspan="4">Sistema Visual</th></tr>
+                        <tr><td>Sensibilidade à luz</td>
+                            <td><input type="radio" name="perfil_visual_luz" value="nao" data-key="perfil_visual_luz"></td>
+                            <td><input type="radio" name="perfil_visual_luz" value="ocasional" data-key="perfil_visual_luz"></td>
+                            <td><input type="radio" name="perfil_visual_luz" value="frequente" data-key="perfil_visual_luz"></td>
+                        </tr>
+                        <tr><td>Fascínio por luzes ou objetos giratórios</td>
+                            <td><input type="radio" name="perfil_visual_fascinio" value="nao" data-key="perfil_visual_fascinio"></td>
+                            <td><input type="radio" name="perfil_visual_fascinio" value="ocasional" data-key="perfil_visual_fascinio"></td>
+                            <td><input type="radio" name="perfil_visual_fascinio" value="frequente" data-key="perfil_visual_fascinio"></td>
+                        </tr>
+                        <tr><td>Dificuldade para manter contato visual</td>
+                            <td><input type="radio" name="perfil_visual_contato" value="nao" data-key="perfil_visual_contato"></td>
+                            <td><input type="radio" name="perfil_visual_contato" value="ocasional" data-key="perfil_visual_contato"></td>
+                            <td><input type="radio" name="perfil_visual_contato" value="frequente" data-key="perfil_visual_contato"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="obsPerfil" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 5. Modulação Sensorial -->
+            <div id="tab-modulacao" class="tab-pane">
+                <h2>Checklist de Sinais Sensoriais — Modulação Sensorial</h2>
+                <table id="tabela-modulacao">
+                    <thead>
+                        <tr><th style="width:40%;">Sinais Observados</th><th>Nunca</th><th>Raramente</th><th>Às vezes</th><th>Frequentemente</th><th>Sempre</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="6">1. Hiperresponsividade Sensorial</th></tr>
+                        <tr><td>Reage intensamente aos estímulos</td>
+                            <td><input type="radio" name="mod_hiper_reage" value="nunca" data-key="mod_hiper_reage"></td>
+                            <td><input type="radio" name="mod_hiper_reage" value="raramente" data-key="mod_hiper_reage"></td>
+                            <td><input type="radio" name="mod_hiper_reage" value="as vezes" data-key="mod_hiper_reage"></td>
+                            <td><input type="radio" name="mod_hiper_reage" value="frequentemente" data-key="mod_hiper_reage"></td>
+                            <td><input type="radio" name="mod_hiper_reage" value="sempre" data-key="mod_hiper_reage"></td>
+                        </tr>
+                        <tr><td>Evita ambientes movimentados</td>
+                            <td><input type="radio" name="mod_hiper_evita" value="nunca" data-key="mod_hiper_evita"></td>
+                            <td><input type="radio" name="mod_hiper_evita" value="raramente" data-key="mod_hiper_evita"></td>
+                            <td><input type="radio" name="mod_hiper_evita" value="as vezes" data-key="mod_hiper_evita"></td>
+                            <td><input type="radio" name="mod_hiper_evita" value="frequentemente" data-key="mod_hiper_evita"></td>
+                            <td><input type="radio" name="mod_hiper_evita" value="sempre" data-key="mod_hiper_evita"></td>
+                        </tr>
+                        <tr><td>Irrita-se facilmente diante de sons ou toques</td>
+                            <td><input type="radio" name="mod_hiper_irrita" value="nunca" data-key="mod_hiper_irrita"></td>
+                            <td><input type="radio" name="mod_hiper_irrita" value="raramente" data-key="mod_hiper_irrita"></td>
+                            <td><input type="radio" name="mod_hiper_irrita" value="as vezes" data-key="mod_hiper_irrita"></td>
+                            <td><input type="radio" name="mod_hiper_irrita" value="frequentemente" data-key="mod_hiper_irrita"></td>
+                            <td><input type="radio" name="mod_hiper_irrita" value="sempre" data-key="mod_hiper_irrita"></td>
+                        </tr>
+                        <tr><th colspan="6">2. Hiporresponsividade Sensorial</th></tr>
+                        <tr><td>Parece não perceber estímulos</td>
+                            <td><input type="radio" name="mod_hipo_percebe" value="nunca" data-key="mod_hipo_percebe"></td>
+                            <td><input type="radio" name="mod_hipo_percebe" value="raramente" data-key="mod_hipo_percebe"></td>
+                            <td><input type="radio" name="mod_hipo_percebe" value="as vezes" data-key="mod_hipo_percebe"></td>
+                            <td><input type="radio" name="mod_hipo_percebe" value="frequentemente" data-key="mod_hipo_percebe"></td>
+                            <td><input type="radio" name="mod_hipo_percebe" value="sempre" data-key="mod_hipo_percebe"></td>
+                        </tr>
+                        <tr><td>Responde lentamente quando chamado</td>
+                            <td><input type="radio" name="mod_hipo_lento" value="nunca" data-key="mod_hipo_lento"></td>
+                            <td><input type="radio" name="mod_hipo_lento" value="raramente" data-key="mod_hipo_lento"></td>
+                            <td><input type="radio" name="mod_hipo_lento" value="as vezes" data-key="mod_hipo_lento"></td>
+                            <td><input type="radio" name="mod_hipo_lento" value="frequentemente" data-key="mod_hipo_lento"></td>
+                            <td><input type="radio" name="mod_hipo_lento" value="sempre" data-key="mod_hipo_lento"></td>
+                        </tr>
+                        <tr><td>Demonstra baixa percepção corporal</td>
+                            <td><input type="radio" name="mod_hipo_corporal" value="nunca" data-key="mod_hipo_corporal"></td>
+                            <td><input type="radio" name="mod_hipo_corporal" value="raramente" data-key="mod_hipo_corporal"></td>
+                            <td><input type="radio" name="mod_hipo_corporal" value="as vezes" data-key="mod_hipo_corporal"></td>
+                            <td><input type="radio" name="mod_hipo_corporal" value="frequentemente" data-key="mod_hipo_corporal"></td>
+                            <td><input type="radio" name="mod_hipo_corporal" value="sempre" data-key="mod_hipo_corporal"></td>
+                        </tr>
+                        <tr><th colspan="6">3. Busca Sensorial</th></tr>
+                        <tr><td>Busca movimento excessivo</td>
+                            <td><input type="radio" name="mod_busca_mov" value="nunca" data-key="mod_busca_mov"></td>
+                            <td><input type="radio" name="mod_busca_mov" value="raramente" data-key="mod_busca_mov"></td>
+                            <td><input type="radio" name="mod_busca_mov" value="as vezes" data-key="mod_busca_mov"></td>
+                            <td><input type="radio" name="mod_busca_mov" value="frequentemente" data-key="mod_busca_mov"></td>
+                            <td><input type="radio" name="mod_busca_mov" value="sempre" data-key="mod_busca_mov"></td>
+                        </tr>
+                        <tr><td>Procura estímulos intensos</td>
+                            <td><input type="radio" name="mod_busca_intensos" value="nunca" data-key="mod_busca_intensos"></td>
+                            <td><input type="radio" name="mod_busca_intensos" value="raramente" data-key="mod_busca_intensos"></td>
+                            <td><input type="radio" name="mod_busca_intensos" value="as vezes" data-key="mod_busca_intensos"></td>
+                            <td><input type="radio" name="mod_busca_intensos" value="frequentemente" data-key="mod_busca_intensos"></td>
+                            <td><input type="radio" name="mod_busca_intensos" value="sempre" data-key="mod_busca_intensos"></td>
+                        </tr>
+                        <tr><td>Gosta de girar, pular ou correr</td>
+                            <td><input type="radio" name="mod_busca_girar" value="nunca" data-key="mod_busca_girar"></td>
+                            <td><input type="radio" name="mod_busca_girar" value="raramente" data-key="mod_busca_girar"></td>
+                            <td><input type="radio" name="mod_busca_girar" value="as vezes" data-key="mod_busca_girar"></td>
+                            <td><input type="radio" name="mod_busca_girar" value="frequentemente" data-key="mod_busca_girar"></td>
+                            <td><input type="radio" name="mod_busca_girar" value="sempre" data-key="mod_busca_girar"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Interpretação Clínica Inicial</label>
+                    <textarea id="modInterpretacao" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 6. Impacto Funcional -->
+            <div id="tab-impacto" class="tab-pane">
+                <h2>Checklist de Sinais Sensoriais — Impacto Funcional</h2>
+                <p style="margin-bottom:10px; color:#3e5a76;">Classifique o impacto que os sinais sensoriais apresentam nas atividades e contextos da criança.</p>
+                <table id="tabela-impacto">
+                    <thead>
+                        <tr><th style="width:40%;">Atividade / Contexto</th><th>Sem impacto</th><th>Impacto leve</th><th>Impacto moderado</th><th>Impacto severo</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="5">1. Atividades de Vida Diária (AVDs)</th></tr>
+                        <tr><td>Alimentação</td>
+                            <td><input type="radio" name="impacto_alimentacao" value="sem" data-key="impacto_alimentacao"></td>
+                            <td><input type="radio" name="impacto_alimentacao" value="leve" data-key="impacto_alimentacao"></td>
+                            <td><input type="radio" name="impacto_alimentacao" value="moderado" data-key="impacto_alimentacao"></td>
+                            <td><input type="radio" name="impacto_alimentacao" value="severo" data-key="impacto_alimentacao"></td>
+                        </tr>
+                        <tr><td>Banho</td>
+                            <td><input type="radio" name="impacto_banho" value="sem" data-key="impacto_banho"></td>
+                            <td><input type="radio" name="impacto_banho" value="leve" data-key="impacto_banho"></td>
+                            <td><input type="radio" name="impacto_banho" value="moderado" data-key="impacto_banho"></td>
+                            <td><input type="radio" name="impacto_banho" value="severo" data-key="impacto_banho"></td>
+                        </tr>
+                        <tr><td>Vestuário</td>
+                            <td><input type="radio" name="impacto_vestuario" value="sem" data-key="impacto_vestuario"></td>
+                            <td><input type="radio" name="impacto_vestuario" value="leve" data-key="impacto_vestuario"></td>
+                            <td><input type="radio" name="impacto_vestuario" value="moderado" data-key="impacto_vestuario"></td>
+                            <td><input type="radio" name="impacto_vestuario" value="severo" data-key="impacto_vestuario"></td>
+                        </tr>
+                        <tr><td>Higiene pessoal</td>
+                            <td><input type="radio" name="impacto_higiene" value="sem" data-key="impacto_higiene"></td>
+                            <td><input type="radio" name="impacto_higiene" value="leve" data-key="impacto_higiene"></td>
+                            <td><input type="radio" name="impacto_higiene" value="moderado" data-key="impacto_higiene"></td>
+                            <td><input type="radio" name="impacto_higiene" value="severo" data-key="impacto_higiene"></td>
+                        </tr>
+                        <tr><th colspan="5">2. Ambiente Escolar</th></tr>
+                        <tr><td>Atenção</td>
+                            <td><input type="radio" name="impacto_escola_atencao" value="sem" data-key="impacto_escola_atencao"></td>
+                            <td><input type="radio" name="impacto_escola_atencao" value="leve" data-key="impacto_escola_atencao"></td>
+                            <td><input type="radio" name="impacto_escola_atencao" value="moderado" data-key="impacto_escola_atencao"></td>
+                            <td><input type="radio" name="impacto_escola_atencao" value="severo" data-key="impacto_escola_atencao"></td>
+                        </tr>
+                        <tr><td>Participação em atividades</td>
+                            <td><input type="radio" name="impacto_escola_participacao" value="sem" data-key="impacto_escola_participacao"></td>
+                            <td><input type="radio" name="impacto_escola_participacao" value="leve" data-key="impacto_escola_participacao"></td>
+                            <td><input type="radio" name="impacto_escola_participacao" value="moderado" data-key="impacto_escola_participacao"></td>
+                            <td><input type="radio" name="impacto_escola_participacao" value="severo" data-key="impacto_escola_participacao"></td>
+                        </tr>
+                        <tr><td>Permanência em sala</td>
+                            <td><input type="radio" name="impacto_escola_permanencia" value="sem" data-key="impacto_escola_permanencia"></td>
+                            <td><input type="radio" name="impacto_escola_permanencia" value="leve" data-key="impacto_escola_permanencia"></td>
+                            <td><input type="radio" name="impacto_escola_permanencia" value="moderado" data-key="impacto_escola_permanencia"></td>
+                            <td><input type="radio" name="impacto_escola_permanencia" value="severo" data-key="impacto_escola_permanencia"></td>
+                        </tr>
+                        <tr><th colspan="5">3. Brincar</th></tr>
+                        <tr><td>Exploração do ambiente</td>
+                            <td><input type="radio" name="impacto_brincar_exploracao" value="sem" data-key="impacto_brincar_exploracao"></td>
+                            <td><input type="radio" name="impacto_brincar_exploracao" value="leve" data-key="impacto_brincar_exploracao"></td>
+                            <td><input type="radio" name="impacto_brincar_exploracao" value="moderado" data-key="impacto_brincar_exploracao"></td>
+                            <td><input type="radio" name="impacto_brincar_exploracao" value="severo" data-key="impacto_brincar_exploracao"></td>
+                        </tr>
+                        <tr><td>Brincadeira simbólica</td>
+                            <td><input type="radio" name="impacto_brincar_simbolica" value="sem" data-key="impacto_brincar_simbolica"></td>
+                            <td><input type="radio" name="impacto_brincar_simbolica" value="leve" data-key="impacto_brincar_simbolica"></td>
+                            <td><input type="radio" name="impacto_brincar_simbolica" value="moderado" data-key="impacto_brincar_simbolica"></td>
+                            <td><input type="radio" name="impacto_brincar_simbolica" value="severo" data-key="impacto_brincar_simbolica"></td>
+                        </tr>
+                        <tr><td>Participação com pares</td>
+                            <td><input type="radio" name="impacto_brincar_pares" value="sem" data-key="impacto_brincar_pares"></td>
+                            <td><input type="radio" name="impacto_brincar_pares" value="leve" data-key="impacto_brincar_pares"></td>
+                            <td><input type="radio" name="impacto_brincar_pares" value="moderado" data-key="impacto_brincar_pares"></td>
+                            <td><input type="radio" name="impacto_brincar_pares" value="severo" data-key="impacto_brincar_pares"></td>
+                        </tr>
+                        <tr><th colspan="5">4. Participação Social</th></tr>
+                        <tr><td>Interação familiar</td>
+                            <td><input type="radio" name="impacto_social_familiar" value="sem" data-key="impacto_social_familiar"></td>
+                            <td><input type="radio" name="impacto_social_familiar" value="leve" data-key="impacto_social_familiar"></td>
+                            <td><input type="radio" name="impacto_social_familiar" value="moderado" data-key="impacto_social_familiar"></td>
+                            <td><input type="radio" name="impacto_social_familiar" value="severo" data-key="impacto_social_familiar"></td>
+                        </tr>
+                        <tr><td>Interação social</td>
+                            <td><input type="radio" name="impacto_social_interacao" value="sem" data-key="impacto_social_interacao"></td>
+                            <td><input type="radio" name="impacto_social_interacao" value="leve" data-key="impacto_social_interacao"></td>
+                            <td><input type="radio" name="impacto_social_interacao" value="moderado" data-key="impacto_social_interacao"></td>
+                            <td><input type="radio" name="impacto_social_interacao" value="severo" data-key="impacto_social_interacao"></td>
+                        </tr>
+                        <tr><td>Participação em ambientes públicos</td>
+                            <td><input type="radio" name="impacto_social_publico" value="sem" data-key="impacto_social_publico"></td>
+                            <td><input type="radio" name="impacto_social_publico" value="leve" data-key="impacto_social_publico"></td>
+                            <td><input type="radio" name="impacto_social_publico" value="moderado" data-key="impacto_social_publico"></td>
+                            <td><input type="radio" name="impacto_social_publico" value="severo" data-key="impacto_social_publico"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Considerações Clínicas</label>
+                    <textarea id="impactoConsid" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 7. Interpretação Clínica Sensorial -->
+            <div id="tab-interpretacao" class="tab-pane">
+                <h2>Checklist de Interpretação Clínica Sensorial</h2>
+                <div class="descricao-escala">
+                    <strong>Nunca</strong> — O comportamento não ocorre. &nbsp;|&nbsp;
+                    <strong>Raramente</strong> — Ocorre em poucas situações. &nbsp;|&nbsp;
+                    <strong>Às vezes</strong> — Ocorre em algumas situações de forma irregular. &nbsp;|&nbsp;
+                    <strong>Frequentemente</strong> — Ocorre na maioria das situações. &nbsp;|&nbsp;
+                    <strong>Sempre</strong> — Ocorre em todas as situações.
+                </div>
+                <table id="tabela-interpretacao">
+                    <thead>
+                        <tr><th style="width:40%;">Domínios Avaliados</th><th>Nunca</th><th>Raramente</th><th>Às vezes</th><th>Frequentemente</th><th>Sempre</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="6">1. Achados Sensoriais</th></tr>
+                        <tr><td>Compatíveis com hiperresponsividade</td>
+                            <td><input type="radio" name="interp_hiper" value="nunca" data-key="interp_hiper"></td>
+                            <td><input type="radio" name="interp_hiper" value="raramente" data-key="interp_hiper"></td>
+                            <td><input type="radio" name="interp_hiper" value="as vezes" data-key="interp_hiper"></td>
+                            <td><input type="radio" name="interp_hiper" value="frequentemente" data-key="interp_hiper"></td>
+                            <td><input type="radio" name="interp_hiper" value="sempre" data-key="interp_hiper"></td>
+                        </tr>
+                        <tr><td>Compatíveis com hiporresponsividade</td>
+                            <td><input type="radio" name="interp_hipo" value="nunca" data-key="interp_hipo"></td>
+                            <td><input type="radio" name="interp_hipo" value="raramente" data-key="interp_hipo"></td>
+                            <td><input type="radio" name="interp_hipo" value="as vezes" data-key="interp_hipo"></td>
+                            <td><input type="radio" name="interp_hipo" value="frequentemente" data-key="interp_hipo"></td>
+                            <td><input type="radio" name="interp_hipo" value="sempre" data-key="interp_hipo"></td>
+                        </tr>
+                        <tr><td>Compatíveis com busca sensorial</td>
+                            <td><input type="radio" name="interp_busca" value="nunca" data-key="interp_busca"></td>
+                            <td><input type="radio" name="interp_busca" value="raramente" data-key="interp_busca"></td>
+                            <td><input type="radio" name="interp_busca" value="as vezes" data-key="interp_busca"></td>
+                            <td><input type="radio" name="interp_busca" value="frequentemente" data-key="interp_busca"></td>
+                            <td><input type="radio" name="interp_busca" value="sempre" data-key="interp_busca"></td>
+                        </tr>
+                        <tr><th colspan="6">2. Impacto Ocupacional</th></tr>
+                        <tr><td>Ausente</td>
+                            <td><input type="radio" name="interp_impacto_ausente" value="nunca" data-key="interp_impacto_ausente"></td>
+                            <td><input type="radio" name="interp_impacto_ausente" value="raramente" data-key="interp_impacto_ausente"></td>
+                            <td><input type="radio" name="interp_impacto_ausente" value="as vezes" data-key="interp_impacto_ausente"></td>
+                            <td><input type="radio" name="interp_impacto_ausente" value="frequentemente" data-key="interp_impacto_ausente"></td>
+                            <td><input type="radio" name="interp_impacto_ausente" value="sempre" data-key="interp_impacto_ausente"></td>
+                        </tr>
+                        <tr><td>Leve</td>
+                            <td><input type="radio" name="interp_impacto_leve" value="nunca" data-key="interp_impacto_leve"></td>
+                            <td><input type="radio" name="interp_impacto_leve" value="raramente" data-key="interp_impacto_leve"></td>
+                            <td><input type="radio" name="interp_impacto_leve" value="as vezes" data-key="interp_impacto_leve"></td>
+                            <td><input type="radio" name="interp_impacto_leve" value="frequentemente" data-key="interp_impacto_leve"></td>
+                            <td><input type="radio" name="interp_impacto_leve" value="sempre" data-key="interp_impacto_leve"></td>
+                        </tr>
+                        <tr><td>Moderado</td>
+                            <td><input type="radio" name="interp_impacto_moderado" value="nunca" data-key="interp_impacto_moderado"></td>
+                            <td><input type="radio" name="interp_impacto_moderado" value="raramente" data-key="interp_impacto_moderado"></td>
+                            <td><input type="radio" name="interp_impacto_moderado" value="as vezes" data-key="interp_impacto_moderado"></td>
+                            <td><input type="radio" name="interp_impacto_moderado" value="frequentemente" data-key="interp_impacto_moderado"></td>
+                            <td><input type="radio" name="interp_impacto_moderado" value="sempre" data-key="interp_impacto_moderado"></td>
+                        </tr>
+                        <tr><td>Importante</td>
+                            <td><input type="radio" name="interp_impacto_importante" value="nunca" data-key="interp_impacto_importante"></td>
+                            <td><input type="radio" name="interp_impacto_importante" value="raramente" data-key="interp_impacto_importante"></td>
+                            <td><input type="radio" name="interp_impacto_importante" value="as vezes" data-key="interp_impacto_importante"></td>
+                            <td><input type="radio" name="interp_impacto_importante" value="frequentemente" data-key="interp_impacto_importante"></td>
+                            <td><input type="radio" name="interp_impacto_importante" value="sempre" data-key="interp_impacto_importante"></td>
+                        </tr>
+                        <tr><th colspan="6">3. Consistência dos Achados</th></tr>
+                        <tr><td>Presente em múltiplos contextos</td>
+                            <td><input type="radio" name="interp_consist_multiplos" value="nunca" data-key="interp_consist_multiplos"></td>
+                            <td><input type="radio" name="interp_consist_multiplos" value="raramente" data-key="interp_consist_multiplos"></td>
+                            <td><input type="radio" name="interp_consist_multiplos" value="as vezes" data-key="interp_consist_multiplos"></td>
+                            <td><input type="radio" name="interp_consist_multiplos" value="frequentemente" data-key="interp_consist_multiplos"></td>
+                            <td><input type="radio" name="interp_consist_multiplos" value="sempre" data-key="interp_consist_multiplos"></td>
+                        </tr>
+                        <tr><td>Restrito a contextos específicos</td>
+                            <td><input type="radio" name="interp_consist_restrito" value="nunca" data-key="interp_consist_restrito"></td>
+                            <td><input type="radio" name="interp_consist_restrito" value="raramente" data-key="interp_consist_restrito"></td>
+                            <td><input type="radio" name="interp_consist_restrito" value="as vezes" data-key="interp_consist_restrito"></td>
+                            <td><input type="radio" name="interp_consist_restrito" value="frequentemente" data-key="interp_consist_restrito"></td>
+                            <td><input type="radio" name="interp_consist_restrito" value="sempre" data-key="interp_consist_restrito"></td>
+                        </tr>
+                        <tr><th colspan="6">4. Necessidade de Intervenção</th></tr>
+                        <tr><td>Baixa</td>
+                            <td><input type="radio" name="interp_necess_baixa" value="nunca" data-key="interp_necess_baixa"></td>
+                            <td><input type="radio" name="interp_necess_baixa" value="raramente" data-key="interp_necess_baixa"></td>
+                            <td><input type="radio" name="interp_necess_baixa" value="as vezes" data-key="interp_necess_baixa"></td>
+                            <td><input type="radio" name="interp_necess_baixa" value="frequentemente" data-key="interp_necess_baixa"></td>
+                            <td><input type="radio" name="interp_necess_baixa" value="sempre" data-key="interp_necess_baixa"></td>
+                        </tr>
+                        <tr><td>Moderada</td>
+                            <td><input type="radio" name="interp_necess_moderada" value="nunca" data-key="interp_necess_moderada"></td>
+                            <td><input type="radio" name="interp_necess_moderada" value="raramente" data-key="interp_necess_moderada"></td>
+                            <td><input type="radio" name="interp_necess_moderada" value="as vezes" data-key="interp_necess_moderada"></td>
+                            <td><input type="radio" name="interp_necess_moderada" value="frequentemente" data-key="interp_necess_moderada"></td>
+                            <td><input type="radio" name="interp_necess_moderada" value="sempre" data-key="interp_necess_moderada"></td>
+                        </tr>
+                        <tr><td>Alta</td>
+                            <td><input type="radio" name="interp_necess_alta" value="nunca" data-key="interp_necess_alta"></td>
+                            <td><input type="radio" name="interp_necess_alta" value="raramente" data-key="interp_necess_alta"></td>
+                            <td><input type="radio" name="interp_necess_alta" value="as vezes" data-key="interp_necess_alta"></td>
+                            <td><input type="radio" name="interp_necess_alta" value="frequentemente" data-key="interp_necess_alta"></td>
+                            <td><input type="radio" name="interp_necess_alta" value="sempre" data-key="interp_necess_alta"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Observações Clínicas / Hipóteses Clínicas</label>
+                    <textarea id="interpObs" rows="4" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Síntese Clínica Final</label>
+                    <textarea id="interpSintese" rows="4" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 8. Protocolo Global de Interpretação -->
+            <div id="tab-protocolo" class="tab-pane">
+                <h2>Protocolo Global de Interpretação Clínica Sensorial</h2>
+                <table id="tabela-protocolo">
+                    <thead>
+                        <tr><th style="width:35%;">Domínios Avaliados</th><th>Nunca</th><th>Raramente</th><th>Às vezes</th><th>Frequentemente</th><th>Sempre</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><th colspan="6">1. Organização Sensorial Global</th></tr>
+                        <tr><td>Adequada</td>
+                            <td><input type="radio" name="prot_org_adequada" value="nunca" data-key="prot_org_adequada"></td>
+                            <td><input type="radio" name="prot_org_adequada" value="raramente" data-key="prot_org_adequada"></td>
+                            <td><input type="radio" name="prot_org_adequada" value="as vezes" data-key="prot_org_adequada"></td>
+                            <td><input type="radio" name="prot_org_adequada" value="frequentemente" data-key="prot_org_adequada"></td>
+                            <td><input type="radio" name="prot_org_adequada" value="sempre" data-key="prot_org_adequada"></td>
+                        </tr>
+                        <tr><td>Em observação</td>
+                            <td><input type="radio" name="prot_org_obs" value="nunca" data-key="prot_org_obs"></td>
+                            <td><input type="radio" name="prot_org_obs" value="raramente" data-key="prot_org_obs"></td>
+                            <td><input type="radio" name="prot_org_obs" value="as vezes" data-key="prot_org_obs"></td>
+                            <td><input type="radio" name="prot_org_obs" value="frequentemente" data-key="prot_org_obs"></td>
+                            <td><input type="radio" name="prot_org_obs" value="sempre" data-key="prot_org_obs"></td>
+                        </tr>
+                        <tr><td>Alterada</td>
+                            <td><input type="radio" name="prot_org_alterada" value="nunca" data-key="prot_org_alterada"></td>
+                            <td><input type="radio" name="prot_org_alterada" value="raramente" data-key="prot_org_alterada"></td>
+                            <td><input type="radio" name="prot_org_alterada" value="as vezes" data-key="prot_org_alterada"></td>
+                            <td><input type="radio" name="prot_org_alterada" value="frequentemente" data-key="prot_org_alterada"></td>
+                            <td><input type="radio" name="prot_org_alterada" value="sempre" data-key="prot_org_alterada"></td>
+                        </tr>
+                        <tr><th colspan="6">2. Padrões Sensoriais Predominantes</th></tr>
+                        <tr><td>Hiperresponsividade</td>
+                            <td><input type="radio" name="prot_padrao_hiper" value="nunca" data-key="prot_padrao_hiper"></td>
+                            <td><input type="radio" name="prot_padrao_hiper" value="raramente" data-key="prot_padrao_hiper"></td>
+                            <td><input type="radio" name="prot_padrao_hiper" value="as vezes" data-key="prot_padrao_hiper"></td>
+                            <td><input type="radio" name="prot_padrao_hiper" value="frequentemente" data-key="prot_padrao_hiper"></td>
+                            <td><input type="radio" name="prot_padrao_hiper" value="sempre" data-key="prot_padrao_hiper"></td>
+                        </tr>
+                        <tr><td>Hiporresponsividade</td>
+                            <td><input type="radio" name="prot_padrao_hipo" value="nunca" data-key="prot_padrao_hipo"></td>
+                            <td><input type="radio" name="prot_padrao_hipo" value="raramente" data-key="prot_padrao_hipo"></td>
+                            <td><input type="radio" name="prot_padrao_hipo" value="as vezes" data-key="prot_padrao_hipo"></td>
+                            <td><input type="radio" name="prot_padrao_hipo" value="frequentemente" data-key="prot_padrao_hipo"></td>
+                            <td><input type="radio" name="prot_padrao_hipo" value="sempre" data-key="prot_padrao_hipo"></td>
+                        </tr>
+                        <tr><td>Busca sensorial</td>
+                            <td><input type="radio" name="prot_padrao_busca" value="nunca" data-key="prot_padrao_busca"></td>
+                            <td><input type="radio" name="prot_padrao_busca" value="raramente" data-key="prot_padrao_busca"></td>
+                            <td><input type="radio" name="prot_padrao_busca" value="as vezes" data-key="prot_padrao_busca"></td>
+                            <td><input type="radio" name="prot_padrao_busca" value="frequentemente" data-key="prot_padrao_busca"></td>
+                            <td><input type="radio" name="prot_padrao_busca" value="sempre" data-key="prot_padrao_busca"></td>
+                        </tr>
+                        <tr><th colspan="6">3. Repercussões Funcionais</th></tr>
+                        <tr><td>Brincar</td>
+                            <td><input type="radio" name="prot_reperc_brincar" value="nunca" data-key="prot_reperc_brincar"></td>
+                            <td><input type="radio" name="prot_reperc_brincar" value="raramente" data-key="prot_reperc_brincar"></td>
+                            <td><input type="radio" name="prot_reperc_brincar" value="as vezes" data-key="prot_reperc_brincar"></td>
+                            <td><input type="radio" name="prot_reperc_brincar" value="frequentemente" data-key="prot_reperc_brincar"></td>
+                            <td><input type="radio" name="prot_reperc_brincar" value="sempre" data-key="prot_reperc_brincar"></td>
+                        </tr>
+                        <tr><td>AVDs</td>
+                            <td><input type="radio" name="prot_reperc_avds" value="nunca" data-key="prot_reperc_avds"></td>
+                            <td><input type="radio" name="prot_reperc_avds" value="raramente" data-key="prot_reperc_avds"></td>
+                            <td><input type="radio" name="prot_reperc_avds" value="as vezes" data-key="prot_reperc_avds"></td>
+                            <td><input type="radio" name="prot_reperc_avds" value="frequentemente" data-key="prot_reperc_avds"></td>
+                            <td><input type="radio" name="prot_reperc_avds" value="sempre" data-key="prot_reperc_avds"></td>
+                        </tr>
+                        <tr><td>Escola</td>
+                            <td><input type="radio" name="prot_reperc_escola" value="nunca" data-key="prot_reperc_escola"></td>
+                            <td><input type="radio" name="prot_reperc_escola" value="raramente" data-key="prot_reperc_escola"></td>
+                            <td><input type="radio" name="prot_reperc_escola" value="as vezes" data-key="prot_reperc_escola"></td>
+                            <td><input type="radio" name="prot_reperc_escola" value="frequentemente" data-key="prot_reperc_escola"></td>
+                            <td><input type="radio" name="prot_reperc_escola" value="sempre" data-key="prot_reperc_escola"></td>
+                        </tr>
+                        <tr><td>Socialização</td>
+                            <td><input type="radio" name="prot_reperc_social" value="nunca" data-key="prot_reperc_social"></td>
+                            <td><input type="radio" name="prot_reperc_social" value="raramente" data-key="prot_reperc_social"></td>
+                            <td><input type="radio" name="prot_reperc_social" value="as vezes" data-key="prot_reperc_social"></td>
+                            <td><input type="radio" name="prot_reperc_social" value="frequentemente" data-key="prot_reperc_social"></td>
+                            <td><input type="radio" name="prot_reperc_social" value="sempre" data-key="prot_reperc_social"></td>
+                        </tr>
+                        <tr><th colspan="6">4. Necessidade de Intervenção</th></tr>
+                        <tr><td>Preventiva</td>
+                            <td><input type="radio" name="prot_necess_preventiva" value="nunca" data-key="prot_necess_preventiva"></td>
+                            <td><input type="radio" name="prot_necess_preventiva" value="raramente" data-key="prot_necess_preventiva"></td>
+                            <td><input type="radio" name="prot_necess_preventiva" value="as vezes" data-key="prot_necess_preventiva"></td>
+                            <td><input type="radio" name="prot_necess_preventiva" value="frequentemente" data-key="prot_necess_preventiva"></td>
+                            <td><input type="radio" name="prot_necess_preventiva" value="sempre" data-key="prot_necess_preventiva"></td>
+                        </tr>
+                        <tr><td>Moderada</td>
+                            <td><input type="radio" name="prot_necess_moderada" value="nunca" data-key="prot_necess_moderada"></td>
+                            <td><input type="radio" name="prot_necess_moderada" value="raramente" data-key="prot_necess_moderada"></td>
+                            <td><input type="radio" name="prot_necess_moderada" value="as vezes" data-key="prot_necess_moderada"></td>
+                            <td><input type="radio" name="prot_necess_moderada" value="frequentemente" data-key="prot_necess_moderada"></td>
+                            <td><input type="radio" name="prot_necess_moderada" value="sempre" data-key="prot_necess_moderada"></td>
+                        </tr>
+                        <tr><td>Intensiva</td>
+                            <td><input type="radio" name="prot_necess_intensiva" value="nunca" data-key="prot_necess_intensiva"></td>
+                            <td><input type="radio" name="prot_necess_intensiva" value="raramente" data-key="prot_necess_intensiva"></td>
+                            <td><input type="radio" name="prot_necess_intensiva" value="as vezes" data-key="prot_necess_intensiva"></td>
+                            <td><input type="radio" name="prot_necess_intensiva" value="frequentemente" data-key="prot_necess_intensiva"></td>
+                            <td><input type="radio" name="prot_necess_intensiva" value="sempre" data-key="prot_necess_intensiva"></td>
+                        </tr>
+                        <tr><th colspan="6">5. Definição de Conduta</th></tr>
+                        <tr><td>Orientação familiar</td>
+                            <td><input type="radio" name="prot_conduta_orientacao" value="nunca" data-key="prot_conduta_orientacao"></td>
+                            <td><input type="radio" name="prot_conduta_orientacao" value="raramente" data-key="prot_conduta_orientacao"></td>
+                            <td><input type="radio" name="prot_conduta_orientacao" value="as vezes" data-key="prot_conduta_orientacao"></td>
+                            <td><input type="radio" name="prot_conduta_orientacao" value="frequentemente" data-key="prot_conduta_orientacao"></td>
+                            <td><input type="radio" name="prot_conduta_orientacao" value="sempre" data-key="prot_conduta_orientacao"></td>
+                        </tr>
+                        <tr><td>Plano terapêutico</td>
+                            <td><input type="radio" name="prot_conduta_plano" value="nunca" data-key="prot_conduta_plano"></td>
+                            <td><input type="radio" name="prot_conduta_plano" value="raramente" data-key="prot_conduta_plano"></td>
+                            <td><input type="radio" name="prot_conduta_plano" value="as vezes" data-key="prot_conduta_plano"></td>
+                            <td><input type="radio" name="prot_conduta_plano" value="frequentemente" data-key="prot_conduta_plano"></td>
+                            <td><input type="radio" name="prot_conduta_plano" value="sempre" data-key="prot_conduta_plano"></td>
+                        </tr>
+                        <tr><td>Encaminhamento complementar</td>
+                            <td><input type="radio" name="prot_conduta_encaminha" value="nunca" data-key="prot_conduta_encaminha"></td>
+                            <td><input type="radio" name="prot_conduta_encaminha" value="raramente" data-key="prot_conduta_encaminha"></td>
+                            <td><input type="radio" name="prot_conduta_encaminha" value="as vezes" data-key="prot_conduta_encaminha"></td>
+                            <td><input type="radio" name="prot_conduta_encaminha" value="frequentemente" data-key="prot_conduta_encaminha"></td>
+                            <td><input type="radio" name="prot_conduta_encaminha" value="sempre" data-key="prot_conduta_encaminha"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="classificacao-global">
+                    <label><input type="radio" name="prot_classificacao_global" value="adequada" data-key="prot_classificacao_global"> Adequada</label>
+                    <label><input type="radio" name="prot_classificacao_global" value="observacao" data-key="prot_classificacao_global"> Em Observação</label>
+                    <label><input type="radio" name="prot_classificacao_global" value="alterada" data-key="prot_classificacao_global"> Alterada</label>
+                </div>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="protObs" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Síntese Clínica e Conduta</label>
+                    <textarea id="protSintese" rows="4" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 9. Entrevista Escolar -->
+            <div id="tab-entrevista" class="tab-pane">
+                <h2>Checklist de Entrevista Escolar para Terapia Ocupacional</h2>
+                <table id="tabela-entrevista">
+                    <tbody>
+                        <tr><th style="width:60%;">Pergunta</th><th style="width:40%;">Resposta</th></tr>
+                        <tr><td>1. A criança mantém rotina escolar adequada?</td>
+                            <td>
+                                <label><input type="radio" name="entrev_rotina" value="sim" data-key="entrev_rotina"> Sim</label>
+                                <label><input type="radio" name="entrev_rotina" value="parcial" data-key="entrev_rotina"> Parcialmente</label>
+                                <label><input type="radio" name="entrev_rotina" value="nao" data-key="entrev_rotina"> Não</label>
+                            </td>
+                        </tr>
+                        <tr><td>2. A criança apresenta dificuldades de autorregulação?</td>
+                            <td>
+                                <label><input type="radio" name="entrev_autorreg" value="nunca" data-key="entrev_autorreg"> Nunca</label>
+                                <label><input type="radio" name="entrev_autorreg" value="ocasional" data-key="entrev_autorreg"> Ocasionalmente</label>
+                                <label><input type="radio" name="entrev_autorreg" value="frequente" data-key="entrev_autorreg"> Frequentemente</label>
+                            </td>
+                        </tr>
+                        <tr><td>3. Existem dificuldades sensoriais no ambiente escolar?</td>
+                            <td>
+                                <label><input type="checkbox" class="check-entrev" data-key="entrev_sens_tatil"> Táteis</label>
+                                <label><input type="checkbox" class="check-entrev" data-key="entrev_sens_audit"> Auditivas</label>
+                                <label><input type="checkbox" class="check-entrev" data-key="entrev_sens_visual"> Visuais</label>
+                                <label><input type="checkbox" class="check-entrev" data-key="entrev_sens_vestib"> Vestibulares</label>
+                            </td>
+                        </tr>
+                        <tr><td>4. A criança participa das atividades coletivas?</td>
+                            <td>
+                                <label><input type="radio" name="entrev_participa" value="sempre" data-key="entrev_participa"> Sempre</label>
+                                <label><input type="radio" name="entrev_participa" value="frequente" data-key="entrev_participa"> Frequentemente</label>
+                                <label><input type="radio" name="entrev_participa" value="raramente" data-key="entrev_participa"> Raramente</label>
+                            </td>
+                        </tr>
+                        <tr><td>5. Existem adaptações escolares em uso?</td>
+                            <td>
+                                <label><input type="radio" name="entrev_adaptacao" value="sim" data-key="entrev_adaptacao"> Sim</label>
+                                <label><input type="radio" name="entrev_adaptacao" value="nao" data-key="entrev_adaptacao"> Não</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="campo-texto">
+                    <label>Adaptações Escolares Utilizadas</label>
+                    <textarea id="entrevAdaptacoes" rows="3" placeholder="Descreva..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="entrevObs" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Síntese Clínica Final</label>
+                    <textarea id="entrevSintese" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 10. Matriz de Investigação Escolar -->
+            <div id="tab-matriz" class="tab-pane">
+                <h2>Matriz de Investigação Escolar Sensorial</h2>
+                <table class="matriz-tabela" id="tabela-matriz">
+                    <thead>
+                        <tr>
+                            <th style="width:14%;">Área Investigada</th>
+                            <th style="width:17%;">Comportamento Observado</th>
+                            <th style="width:17%;">Impacto Funcional</th>
+                            <th style="width:17%;">Estratégias já utilizadas pela escola</th>
+                            <th style="width:17%;">Necessidade de Adaptação</th>
+                            <th style="width:18%;">Recomendações Terapêuticas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Atenção</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_atencao_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_atencao_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_atencao_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_atencao_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_atencao_recomendacoes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Autorregulação</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_autorreg_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_autorreg_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_autorreg_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_autorreg_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_autorreg_recomendacoes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Interação Social</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_social_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_social_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_social_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_social_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_social_recomendacoes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Participação Ocupacional</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_participacao_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_participacao_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_participacao_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_participacao_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_participacao_recomendacoes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Coordenação Motora</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_motora_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_motora_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_motora_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_motora_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_motora_recomendacoes"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>Processamento Sensorial</td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_sensorial_comp"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_sensorial_impacto"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_sensorial_estrategias"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_sensorial_necessidade"></textarea></td>
+                            <td><textarea rows="2" class="matriz-texto" data-key="matriz_sensorial_recomendacoes"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="classificacao-global">
+                    <label><input type="radio" name="matriz_classificacao" value="adequado" data-key="matriz_classificacao"> Adequado</label>
+                    <label><input type="radio" name="matriz_classificacao" value="observacao" data-key="matriz_classificacao"> Em Observação</label>
+                    <label><input type="radio" name="matriz_classificacao" value="alterado" data-key="matriz_classificacao"> Alterado</label>
+                    <label><input type="radio" name="matriz_classificacao" value="intervencao" data-key="matriz_classificacao"> Necessita Intervenção</label>
+                </div>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="matrizObs" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Síntese da Investigação</label>
+                    <textarea id="matrizSintese" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+            <!-- 11. Protocolo Global de Entrevista Escolar -->
+            <div id="tab-protocolo-escolar" class="tab-pane">
+                <h2>Protocolo Global de Entrevista Escolar</h2>
+                <div class="campo-texto">
+                    <label>1. Desempenho Acadêmico</label>
+                    <textarea id="protEsc_Desempenho" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>2. Participação em Sala de Aula</label>
+                    <textarea id="protEsc_Participacao" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>3. Interação com Professores e Colegas</label>
+                    <textarea id="protEsc_Interacao" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>4. Respostas Sensoriais Observadas na Escola</label>
+                    <textarea id="protEsc_Respostas" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>5. Estratégias Utilizadas pelos Professores</label>
+                    <textarea id="protEsc_Estrategias" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>6. Dificuldades Relatadas pela Equipe Escolar</label>
+                    <textarea id="protEsc_Dificuldades" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>7. Necessidade de Adaptações Escolares</label>
+                    <textarea id="protEsc_Necessidade" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="classificacao-global">
+                    <label><input type="radio" name="protEsc_classificacao" value="adequado" data-key="protEsc_classificacao"> Adequado</label>
+                    <label><input type="radio" name="protEsc_classificacao" value="observacao" data-key="protEsc_classificacao"> Em Observação</label>
+                    <label><input type="radio" name="protEsc_classificacao" value="alterado" data-key="protEsc_classificacao"> Alterado</label>
+                </div>
+                <div class="campo-texto">
+                    <label>Observações Clínicas</label>
+                    <textarea id="protEsc_Obs" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Recomendações para a Escola</label>
+                    <textarea id="protEsc_Recomendacoes" rows="3" placeholder="..."></textarea>
+                </div>
+                <div class="campo-texto">
+                    <label>Síntese Clínica Final</label>
+                    <textarea id="protEsc_Sintese" rows="3" placeholder="..."></textarea>
+                </div>
+            </div>
+
+        </div><!-- fim tabContent -->
+
+        <!-- Rodapé com assinatura e botões -->
+        <div class="rodape">
+            <div class="assinatura">
+                <label>Assinatura e Carimbo Profissional <input type="text" id="assinatura" placeholder="Digite seu nome e carimbo"></label>
+                <label>Data <input type="text" id="dataAssinatura" placeholder="DD/MM/AAAA"></label>
+            </div>
+            <div class="botoes-rodape">
+                <button class="btn-acao" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+                <button class="btn-acao secundario" onclick="limparFormularios()">🧹 Limpar todos os campos</button>
+                <button class="btn-acao perigo" onclick="excluirDados()">🗑️ Excluir dados salvos</button>
+            </div>
+        </div>
+        <p style="text-align:right; font-size:0.8rem; color:#6c8aa8; margin-top:12px;">Protocolo Clínico de Avaliação Sensorial Infantil — Dra. Fátima Velame</p>
+    </div>
+
+    <script>
+        // ========== Navegação por abas ==========
+        const botoes = document.querySelectorAll('.tab-btn');
+        const abas = document.querySelectorAll('.tab-pane');
+        botoes.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const targetId = this.dataset.tab;
+                botoes.forEach(b => b.classList.remove('active'));
+                abas.forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById(targetId).classList.add('active');
+            });
         });
-        const riskData = responses.map((ans,i) => SPECIAL.includes(i) ? (ans==='sim'?1:0) : (ans==='nao'?1:0));
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        chartInstances.bar = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: Array.from({length:20},(_,i)=>i+1),
-                datasets: [{ data: riskData, backgroundColor: riskData.map(v => v ? '#c44545' : '#3c8d5e') }]
-            },
-            options: { scales: { y: { beginAtZero: true, max:1 } }, plugins: { legend: { display: false } } }
-        });
-    }
 
-    // ---------- Carregar avaliação via JSON ----------
-    function loadFromJSON(file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-            try {
-                const data = JSON.parse(e.target.result);
-                if (data.patient) {
-                    document.getElementById('patientName').value = data.patient.name || '';
-                    document.getElementById('birthDate').value = data.patient.birthDate || '';
-                    document.getElementById('parentName').value = data.patient.parentName || '';
-                    document.getElementById('phone').value = data.patient.phone || '';
-                    document.getElementById('evaluator').value = data.patient.evaluator || '';
-                    patientData = { ...data.patient };
+        // ========== Funções de persistência ==========
+        function coletarDados() {
+            const dados = {};
+
+            // Dados gerais
+            dados.nomeCrianca = document.getElementById('nomeCrianca').value;
+            dados.idadeCrianca = document.getElementById('idadeCrianca').value;
+            dados.dataNasc = document.getElementById('dataNasc').value;
+            dados.dataAval = document.getElementById('dataAval').value;
+            dados.responsavel = document.getElementById('responsavel').value;
+            dados.terapeuta = document.getElementById('terapeuta').value;
+
+            // Assinatura
+            dados.assinatura = document.getElementById('assinatura').value;
+            dados.dataAssinatura = document.getElementById('dataAssinatura').value;
+
+            // Checkboxes de participação
+            const checksPart = document.querySelectorAll('.check-partic');
+            checksPart.forEach(el => {
+                dados[el.dataset.key] = el.checked;
+            });
+
+            // Textareas gerais
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(el => {
+                if (el.id) dados[el.id] = el.value;
+            });
+
+            // Rádios: percorrer todas as tabelas e inputs radio com data-key
+            const radios = document.querySelectorAll('input[type="radio"][data-key]');
+            radios.forEach(el => {
+                if (el.checked) {
+                    dados[el.dataset.key] = el.value;
                 }
-                if (data.responses && Array.isArray(data.responses) && data.responses.length === 20) {
-                    for (let i=0; i<20; i++) {
-                        const radios = document.getElementsByName(`q${i}`);
-                        for (let r of radios) if (r.value === data.responses[i]) r.checked = true;
+            });
+
+            // Checkboxes de entrevista
+            const checksEntrev = document.querySelectorAll('.check-entrev');
+            checksEntrev.forEach(el => {
+                dados[el.dataset.key] = el.checked;
+            });
+
+            // Matriz: textareas com classe matriz-texto
+            const matrizTextos = document.querySelectorAll('.matriz-texto');
+            matrizTextos.forEach(el => {
+                dados[el.dataset.key] = el.value;
+            });
+
+            // Campos de texto avulsos (input text com id)
+            const inputsText = document.querySelectorAll('input[type="text"]');
+            inputsText.forEach(el => {
+                if (el.id && !el.closest('.dados-crianca') && !el.closest('.assinatura') && !el.closest('.busca-box')) {
+                    dados[el.id] = el.value;
+                }
+            });
+
+            // Para os rádios de classificação global que não têm data-key (usamos o name para identificar)
+            const classRadios = document.querySelectorAll('.classificacao-global input[type="radio"]');
+            classRadios.forEach(el => {
+                if (el.checked) {
+                    dados[el.name] = el.value;
+                }
+            });
+
+            return dados;
+        }
+
+        function preencherDados(dados) {
+            if (!dados) return;
+
+            // Dados gerais
+            document.getElementById('nomeCrianca').value = dados.nomeCrianca || '';
+            document.getElementById('idadeCrianca').value = dados.idadeCrianca || '';
+            document.getElementById('dataNasc').value = dados.dataNasc || '';
+            document.getElementById('dataAval').value = dados.dataAval || '';
+            document.getElementById('responsavel').value = dados.responsavel || '';
+            document.getElementById('terapeuta').value = dados.terapeuta || '';
+
+            // Assinatura
+            document.getElementById('assinatura').value = dados.assinatura || '';
+            document.getElementById('dataAssinatura').value = dados.dataAssinatura || '';
+
+            // Checkboxes participação
+            const checksPart = document.querySelectorAll('.check-partic');
+            checksPart.forEach(el => {
+                if (dados[el.dataset.key] !== undefined) {
+                    el.checked = dados[el.dataset.key];
+                }
+            });
+
+            // Textareas
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(el => {
+                if (el.id && dados[el.id] !== undefined) {
+                    el.value = dados[el.id];
+                }
+            });
+
+            // Rádios
+            const radios = document.querySelectorAll('input[type="radio"][data-key]');
+            radios.forEach(el => {
+                const key = el.dataset.key;
+                if (dados[key] !== undefined && dados[key] === el.value) {
+                    el.checked = true;
+                } else {
+                    // Se o valor não for encontrado, desmarca (para não manter seleção anterior)
+                    if (dados[key] === undefined) {
+                        el.checked = false;
                     }
                 }
-                updateProgress();
-                if (data.responses) {
-                    const sc = computeScore();
-                    if (sc) displayResult(sc.score, sc.responses);
+            });
+
+            // Checkboxes entrevista
+            const checksEntrev = document.querySelectorAll('.check-entrev');
+            checksEntrev.forEach(el => {
+                if (dados[el.dataset.key] !== undefined) {
+                    el.checked = dados[el.dataset.key];
                 }
-                alert('✅ Avaliação carregada');
-            } catch (err) {
-                alert('Arquivo inválido');
+            });
+
+            // Matriz
+            const matrizTextos = document.querySelectorAll('.matriz-texto');
+            matrizTextos.forEach(el => {
+                if (dados[el.dataset.key] !== undefined) {
+                    el.value = dados[el.dataset.key];
+                }
+            });
+
+            // Inputs text avulsos (com id)
+            const inputsText = document.querySelectorAll('input[type="text"]');
+            inputsText.forEach(el => {
+                if (el.id && !el.closest('.dados-crianca') && !el.closest('.assinatura') && !el.closest('.busca-box')) {
+                    if (dados[el.id] !== undefined) el.value = dados[el.id];
+                }
+            });
+
+            // Classificações globais (radio com name)
+            const classRadios = document.querySelectorAll('.classificacao-global input[type="radio"]');
+            classRadios.forEach(el => {
+                if (dados[el.name] !== undefined && dados[el.name] === el.value) {
+                    el.checked = true;
+                } else {
+                    el.checked = false;
+                }
+            });
+
+            // Atualizar campo de busca com o nome carregado
+            if (dados.nomeCrianca) {
+                document.getElementById('buscaNome').value = dados.nomeCrianca;
             }
-        };
-        reader.readAsText(file);
-    }
-
-    // ---------- PDF refinado em uma página ----------
-    async function generatePDF() {
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF('p', 'pt', 'a4');
-        const scoreData = computeScore();
-        if (!scoreData) { alert('Complete todas as perguntas.'); return; }
-        const { score, responses } = scoreData;
-        const riskLabel = getRiskLabel(score);
-
-        // Cabeçalho elegante
-        doc.setFillColor(11, 37, 69);
-        doc.rect(0, 0, 600, 80, 'F');
-        doc.setTextColor(255,255,255);
-        doc.setFontSize(22);
-        doc.setFont('helvetica', 'bold');
-        doc.text('M-CHAT-R™', 40, 45);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        doc.text('Triagem para Transtorno do Espectro Autista (16-30 meses)', 40, 62);
-        doc.text('© 2009 Robins, Fein & Barton · Tradução Dra. Rosa Resegue', 40, 75);
-        doc.setTextColor(0,0,0);
-
-        // Dados do paciente em caixa destacada
-        doc.setFillColor(245, 248, 250);
-        doc.roundedRect(40, 95, 520, 70, 8, 8, 'F');
-        doc.setDrawColor(200, 210, 220);
-        doc.setLineWidth(0.5);
-        doc.roundedRect(40, 95, 520, 70, 8, 8, 'S');
-        doc.setFontSize(10);
-        doc.setTextColor(30, 30, 30);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Dados da criança', 50, 115);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`Nome: ${patientData.name || '________________________'}`, 50, 132);
-        doc.text(`Nascimento: ${patientData.birthDate || '______'}  |  Idade: ${calculateAge(patientData.birthDate) || '--'} meses`, 50, 147);
-        doc.text(`Responsável: ${patientData.parentName || '________'}  |  Avaliador: ${document.getElementById('evaluator').selectedOptions[0]?.text || '________'}`, 50, 162);
-
-        let y = 185;
-
-        // Pontuação e interpretação em destaque
-        doc.setFillColor(240, 247, 255);
-        doc.roundedRect(40, y, 520, 50, 8, 8, 'F');
-        doc.setDrawColor(70, 130, 200);
-        doc.roundedRect(40, y, 520, 50, 8, 8, 'S');
-        doc.setFontSize(16);
-        doc.setTextColor(11, 37, 69);
-        doc.setFont('helvetica', 'bold');
-        doc.text(`Pontuação: ${score}/20 · ${riskLabel}`, 50, y+22);
-        doc.setFontSize(9);
-        doc.setTextColor(60, 60, 60);
-        let interpret = '';
-        if (score<=2) interpret = 'Baixo risco: repetir M-CHAT-R aos 24 meses. Nenhuma outra medida.';
-        else if (score<=7) interpret = 'Risco moderado: aplicar Entrevista de Seguimento (M-CHAT-R/F).';
-        else interpret = 'Alto risco: encaminhar para avaliação diagnóstica imediata.';
-        doc.text(interpret, 50, y+40);
-        y += 65;
-
-        // Tabela de respostas em grid elegante
-        doc.setFontSize(9);
-        doc.setTextColor(0,0,0);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Respostas individuais (ítem: resposta · risco)', 40, y); y+=15;
-        doc.setFont('helvetica', 'normal');
-        const colX = [40, 200, 360];
-        // Cabeçalho da tabela
-        doc.setFillColor(230, 240, 250);
-        doc.rect(colX[0]-5, y-12, 150, 16, 'F');
-        doc.rect(colX[1]-5, y-12, 140, 16, 'F');
-        doc.rect(colX[2]-5, y-12, 140, 16, 'F');
-        doc.text('Itens 1-7', colX[0], y-2);
-        doc.text('Itens 8-14', colX[1], y-2);
-        doc.text('Itens 15-20', colX[2], y-2);
-        y += 10;
-
-        for (let row=0; row<7; row++) {
-            let i1 = row;
-            let i2 = row+7;
-            let i3 = row+14;
-            if (i3 >= 20) continue;
-            let ans1 = responses[i1]==='sim' ? 'SIM' : 'NÃO';
-            let risk1 = SPECIAL.includes(i1) ? (responses[i1]==='sim'?'⚠️':'') : (responses[i1]==='nao'?'⚠️':'');
-            let ans2 = responses[i2]==='sim' ? 'SIM' : 'NÃO';
-            let risk2 = SPECIAL.includes(i2) ? (responses[i2]==='sim'?'⚠️':'') : (responses[i2]==='nao'?'⚠️':'');
-            let ans3 = responses[i3]==='sim' ? 'SIM' : 'NÃO';
-            let risk3 = SPECIAL.includes(i3) ? (responses[i3]==='sim'?'⚠️':'') : (responses[i3]==='nao'?'⚠️':'');
-            doc.text(`${i1+1}: ${ans1} ${risk1}`, colX[0], y);
-            doc.text(`${i2+1}: ${ans2} ${risk2}`, colX[1], y);
-            doc.text(`${i3+1}: ${ans3} ${risk3}`, colX[2], y);
-            y += 14;
         }
-        y += 10;
 
-        // Gráficos lado a lado
-        try {
-            const pieCanvas = document.getElementById('pieChart');
-            const barCanvas = document.getElementById('barChart');
-            if (pieCanvas && barCanvas) {
-                const pieImg = pieCanvas.toDataURL('image/png');
-                const barImg = barCanvas.toDataURL('image/png');
-                doc.addImage(pieImg, 'PNG', 40, y, 220, 100);
-                doc.addImage(barImg, 'PNG', 300, y, 220, 100);
+        function salvarDados() {
+            const nome = document.getElementById('nomeCrianca').value.trim();
+            if (!nome) {
+                alert('Por favor, informe o nome da criança antes de salvar.');
+                return;
             }
-        } catch (e) {}
+            const dados = coletarDados();
+            // Guardar com chave baseada no nome
+            const chave = 'crianca_' + nome.toLowerCase().replace(/\s/g, '_');
+            localStorage.setItem(chave, JSON.stringify(dados));
+            mostrarToast('✅ Dados salvos com sucesso!');
+        }
 
-        // Rodapé com copyright
-        doc.setFontSize(7);
-        doc.setTextColor(120, 120, 120);
-        doc.text('© 2009 Diana Robins, Deborah Fein, & Marianne Barton. www.mchatscreen.com', 40, 770);
+        function carregarDados() {
+            const nome = document.getElementById('buscaNome').value.trim();
+            if (!nome) {
+                alert('Digite o nome da criança para buscar.');
+                return;
+            }
+            const chave = 'crianca_' + nome.toLowerCase().replace(/\s/g, '_');
+            const dadosStr = localStorage.getItem(chave);
+            if (!dadosStr) {
+                alert('Nenhum dado encontrado para esta criança.');
+                return;
+            }
+            try {
+                const dados = JSON.parse(dadosStr);
+                preencherDados(dados);
+                mostrarToast('✅ Dados carregados com sucesso!');
+            } catch (e) {
+                alert('Erro ao carregar os dados.');
+            }
+        }
 
-        doc.save(`mchat_${patientData.name || 'paciente'}.pdf`);
-    }
+        function excluirDados() {
+            const nome = document.getElementById('buscaNome').value.trim();
+            if (!nome) {
+                alert('Digite o nome da criança para excluir os dados.');
+                return;
+            }
+            const chave = 'crianca_' + nome.toLowerCase().replace(/\s/g, '_');
+            if (!localStorage.getItem(chave)) {
+                alert('Nenhum dado encontrado para esta criança.');
+                return;
+            }
+            if (confirm(`Tem certeza que deseja excluir todos os dados da criança "${nome}"?`)) {
+                localStorage.removeItem(chave);
+                mostrarToast('🗑️ Dados excluídos.');
+                // Opcional: limpar formulário
+                // limparFormularios();
+            }
+        }
 
-    // ---------- Inicialização ----------
-    window.addEventListener('DOMContentLoaded', () => {
-        renderQuestions();
-        loadStoredPatient();
-        updateProgress();
+        function mostrarToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
-        document.getElementById('savePatientBtn').addEventListener('click', saveCurrentPatient);
-        document.getElementById('clearBtn').addEventListener('click', clearAll);
+        // ========== Limpar formulários (exceto dados gerais e assinatura) ==========
+        function limparFormularios() {
+            if (!confirm('Limpar todos os campos dos formulários? (Dados gerais e assinatura serão mantidos)')) return;
 
-        document.getElementById('loadDataBtn').addEventListener('click', () => {
-            document.getElementById('fileInput').click();
+            const abasContent = document.querySelectorAll('.tab-pane');
+            abasContent.forEach(aba => {
+                const inputs = aba.querySelectorAll('input, textarea');
+                inputs.forEach(el => {
+                    if (el.type === 'text' || el.type === 'textarea' || el.tagName === 'TEXTAREA') {
+                        el.value = '';
+                    } else if (el.type === 'checkbox' || el.type === 'radio') {
+                        el.checked = false;
+                    }
+                });
+            });
+            // Limpar também textareas da matriz
+            document.querySelectorAll('.matriz-texto').forEach(el => el.value = '');
+            mostrarToast('🧹 Formulários limpos.');
+        }
+
+        // ========== Eventos ==========
+        document.getElementById('btnSalvar').addEventListener('click', salvarDados);
+        document.getElementById('btnCarregar').addEventListener('click', carregarDados);
+
+        // Também permitir carregar com Enter no campo de busca
+        document.getElementById('buscaNome').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                carregarDados();
+            }
         });
-        document.getElementById('fileInput').addEventListener('change', (e) => {
-            if (e.target.files[0]) loadFromJSON(e.target.files[0]);
-            e.target.value = '';
+
+        // Inicializar com dados se houver nome na busca
+        window.addEventListener('load', function() {
+            // Verificar se há um nome salvo na última sessão? Não, apenas carregar se o usuário buscar.
+            // Mostrar um aviso amigável
+            console.log('Protocolo Clínico de Avaliação Sensorial Infantil carregado.');
         });
 
-        document.getElementById('calcBtn').addEventListener('click', () => {
-            const sc = computeScore();
-            if (!sc) { alert('Responda todas as perguntas.'); return; }
-            displayResult(sc.score, sc.responses);
-        });
-
-        document.getElementById('pdfBtn').addEventListener('click', generatePDF);
-    });
-})();
-</script>
+        // Expor funções globalmente para os botões no HTML
+        window.limparFormularios = limparFormularios;
+        window.excluirDados = excluirDados;
+        window.salvarDados = salvarDados;
+        window.carregarDados = carregarDados;
+    </script>
 </body>
 </html>
